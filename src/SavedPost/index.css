@@ -1,0 +1,95 @@
+.Card {
+    margin: 22px;
+    border-radius: 22px;
+    padding: 22px;
+    width: 70vw;
+    color: white;
+    background-color: #121212;
+    border: 1px solid black;
+  }
+  .heart{
+    padding: 20px;
+  }
+  button{
+    background-color: transparent;
+    border: 0px;
+  }
+  .left-items{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .companyLogoJobFlex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 360px;
+  }
+  .top-box{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+  }
+  .CompanyLogo {
+    height: 77px;
+  }
+  .packageFlex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .ratingFlexJob {
+    display: flex;
+    flex-direction: column;
+    transform: translate(40px,0)
+  }
+  .locationFlexJob {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 200px;
+  }
+  .Star {
+    color: yellow;
+  }
+  
+  @media (max-width: 767px) {
+    .Card {
+      margin: 22px 12px 22px 12px;
+      border-radius: 22px;
+      padding: 22px;
+      background-color: #121212;
+      width: 320px;
+    }
+    .companyLogoJobFlex {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 240px;
+    }
+    .CompanyLogo {
+      height: 64px;
+    }
+    .titleSmallScreens {
+      font-size: 17px;
+    }
+    .packageFlex {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .ratingFlexJob {
+      display: flex;
+      flex-direction: column;
+    }
+    .locationFlexJob {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 200px;
+    }
+    .Star {
+      color: yellow;
+    }
+  }
+  

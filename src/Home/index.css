@@ -1,0 +1,13 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.back {
+
+     background-image: url('https://res.cloudinary.com/da7y99axc/image/upload/v1709744925/xhsewrwcdzqxl4hp0zdd.png');
+     background-size: cover;
+     width: 100vw;
+     height: 98vh;
+     margin: 0;
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+</head>
+<body>
+    <h1>File Upload</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="fileInput">Choose a file:</label><br>
+        <input type="file" id="fileInput" name="fileInput" accept=".jpg, .jpeg, .png, .gif" required><br><br>
+        <label for="fileName">Enter a file name:</label><br>
+        <input type="text" id="fileName" name="fileName" required><br><br>
+        <button type="submit">Upload</button>
+    </form>
+    <div>
+        <h1>File</h1>
+        <table id="myTable">
+            <thead>
+                <tr>
+                    <th>File Name</th>
+                    <th>Delete File</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+        </table>
+    </div>
+    <script>
+ 
+        let tableBody;
+        const listFiles = () => {
+            fetch('/listFiles', {
+                method : 'GET',
+            })
+            .then(resp => resp.json())
+            .then(resp => {
+                console.log(resp.response);
+                if(resp.response.Contents) {
+                    tableBody.innerHTML =  resp.response.Contents.map(f => `
+                    <tr>
+                        <td>${f.Key}</td>
+                        <td><button onclick="deleteFile('${f.Key}')">Delete</button></td>
+                    </tr>
+                `).join('')
+                }
+            })
+            .catch(err => {
+                alert('error');
+            })
+        }
+     
+        const deleteFile = (key) => {
+            fetch(`/delete/${key}`, {
+                method : 'DELETE',
+            })
+            .then(resp => resp.json())
+            .then(resp => {
+                // listFiles();
+            })
+            .catch(err => {
+                alert('error')
+            })
+        }
+     
+     
+        const init = () => {
+            listFiles();
+            deleteFile();
+            tableBody = document.querySelector('#myTable tbody');
+        }
+     
+        window.onload = init;
+    </script>
+    
+</body>
+
+</html>
