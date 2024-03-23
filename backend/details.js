@@ -1,4 +1,4 @@
-const email = 'abhisamudrala2107@gmail.com'
-const password = 'vtcy spis pmwe uvba'
+const email = process.env.MY_MAIL
+const password = process.env.MY_PASS 
 
 module.exports = {email,password}

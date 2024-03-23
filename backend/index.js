@@ -51,7 +51,8 @@ const io = new Server(server,{
     methods: ["GET", "POST", "PUT"],
   }
 })
-// const DBURL = 'mongodb+srv://myAtlasDBUser:abhi123@myatlasclusteredu.bfuqmjy.mongodb.net/myproject'
+// const DBURL = 
+
 
 // websocket connection 
 io.on('connection', (socket) => {
@@ -117,7 +118,6 @@ mongoose.connect(DBURL,{useNewUrlParser: true,useUnifiedTopology: true})
 
 async function insertData() {
   try {
-    // await Job.insertMany(jobPosts);
     await FreelanceJob.insertMany(jobPosts);
     console.log('Data inserted into MongoDB');
   } catch (error) {
@@ -148,8 +148,6 @@ app.get('/sendmail',async (req,res) => {
 
 app.get('/profile/:id',authenticateToken,async(req,res) => {
   const {id}  = req.params
-  console.log(req.params)
-  console.log("HI",id)
   let signData = await SignUp.findOne({username: id})
   if(signData === null){
     res.send({data: {isNull: true}})
@@ -166,7 +164,6 @@ app.get('/image',authenticateToken,async (req,res) => {
     const {username}  = req.user
     let prevData = await Profile.findOne({username})
     const {firstName,lastName,userBio,profileUrl} = prevData || {}
-    // console.log(prevData)
     res.send({firstName,lastName,userBio,profileUrl,username})
 })
 
@@ -373,7 +370,6 @@ app.post('/apply/:id',authenticateToken,  async (req,res) => {
        jobId: jobPostContent._id,
        appliedBy: prevData._id,
     }
-    // const recruiterData = await User.findOne({_id: jobPostContent.postedBy})
     const addApplication = new Form(applicantData)
     addApplication.save().then((result) => {
       const transport = nodemailer.createTransport({
