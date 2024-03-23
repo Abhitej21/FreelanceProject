@@ -11,18 +11,33 @@ const Profile = require('./ProfileSchema')
 const jwt = require('jsonwebtoken')
 const FreelanceJob = require('./JobSchema')
 const Job = require('./TempJobSchema')
-// const Job = require('./JobSchema')
+const bcrypt = require('bcrypt')
 const multer = require('multer')
+require('dotenv').config();
 const nodemailer = require('nodemailer')
 const { User } = require('./TempUserSchema')
-const DBURL = 'mongodb+srv://myAtlasDBUser:anits123@myatlasclusteredu.fl0osbw.mongodb.net/Career-crafter'
 const Application = require('./TempFormSchema')
 const Form = require('./FormSchema')
 
-const {S3Client,DeleteObjectCommand,GetObjectCommand, ListObjectsCommand, PutObjectCommand}=require('@aws-sdk/client-s3');
+const {S3Client,DeleteObjectCommand,GetObjectCommand, ListObjectsCommand, PutObjectCommand, ListBucketInventoryConfigurationsOutputFilterSensitiveLog}=require('@aws-sdk/client-s3');
 const {Upload}=require('@aws-sdk/lib-storage')
 const {getSignedUrl} = require('@aws-sdk/s3-request-presigner')
 const { htmlPrefilter } = require('jquery')
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'resume/')
+  },
+  filename: function (req, file, cb) {
+    const unique = uuidv4() 
+    cb(null,unique+path.extname(file.originalname))
+  }
+})
+
+const DBURL = process.env.MONGO_URI
+
+// const upload = multer({ storage: storage })
+
 
 
 const server = http.createServer(app)
@@ -61,7 +76,7 @@ const changeStream = FreelanceJob.watch()
 
 
 const verifyAccessToken = (token) => {
-  const secret = 'ABHITEJA123';
+  const secret = process.env.PAYLOAD_SECRET_KEY;
 
   try {
     const decoded =  jwt.verify(token, secret);
@@ -91,9 +106,11 @@ function  authenticateToken(req, res, next) {
 app.use(cors())
 app.use(express.json())
 
+
+
 mongoose.connect(DBURL,{useNewUrlParser: true,useUnifiedTopology: true})
 .then((res) => {
-  server.listen(8000);
+  app.listen(8000);
   console.log("Connected to Server 8000");
 }).catch((err) => console.log(err))
 
@@ -112,8 +129,13 @@ async function insertData() {
 }
 app.post('/signup',async(req,res) => {
     const newUser = req.body
+    const hashedPassword = await bcrypt.hash(newUser.password,10)
+
+    const signUpDetails = {
+      ...req.body,
+    }
     newUser.profileUrl = 'https://res.cloudinary.com/da7y99axc/image/upload/v1709389286/dkvz3tcsezlnevxlgmft.jpg'
-    const addUser = new SignUp(newUser)
+    const addUser = new SignUp(signUpDetails)
     addUser.save().then((result) => res.send(result)).catch((err) => res.send(err))
     // insertData()
 
@@ -151,9 +173,7 @@ app.get('/image',authenticateToken,async (req,res) => {
 
 app.post('/profile/:id',async(req,res) => {
     const userDetails = req.body
-    // console.log(userDetails)
     const {username,firstname,lastname,org,email,skills,bio,dob,phone,about,location,github,linkedin,profileUrl } = userDetails
-    // console.log(profileUrl)
     let prevDetails = {}
     prevDetails.username = username
     prevDetails.firstName = firstname 
@@ -260,18 +280,18 @@ const jobPostContent = await FreelanceJob.findOne({id: id})
 const memoryStorage = multer.memoryStorage();
 const upload = multer({ storage: memoryStorage });
 
-const ACCESS_KEY = 'AKIA5FTY6YDJXZHMGW4G'
-const SECRET_KEY = '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'
+const ACCESS_KEY = process.env.AWS_ACCESS_KEY
+const SECRET_KEY = process.env.AWS_SECRET_KEY
 
 const s3 = new S3Client({
-  region : 'ap-south-1',
+  region : process.env.REGION,
   credentials:{
     accessKeyId: ACCESS_KEY,
     secretAccessKey: SECRET_KEY,
   }
 })
 
-const bucketName = "abhiteja-temp"
+const bucketName = process.env.BUCKET_NAME
 
 app.post('/apply/:id',authenticateToken,  async (req,res) => {
   // if(req.resume){
@@ -302,7 +322,7 @@ app.post('/apply/:id',authenticateToken,  async (req,res) => {
   const jobPostContent = await FreelanceJob.findOne({id: id}) 
   if(jobPostContent === null){
     const freelanceJob = await Job.findOne({jobId: id})
-     const {startDate} = req.body
+     const {startDate,resume} = req.body
     const applicantData = {
       startDate: new Date(startDate),
       jobId: freelanceJob._id,
@@ -317,12 +337,10 @@ app.post('/apply/:id',authenticateToken,  async (req,res) => {
         service: 'gmail',
         secure: false,
         auth: {
-          user: 'abhisamudrala2107@gmail.com',
-          pass: 'vtcy spis pmwe uvba',
+          user: process.env.MY_MAIL,
+          pass: process.env.MY_PASS,
         }
       })
-      console.log(recruiterData.firstName)
-      console.log(prevData.email)
       const html = `
         <p>Hi ${prevData.username},</p>
         <p>Thankyou for applying for the position of ${freelanceJob.jobTitle} at ${freelanceJob.companyName}.
@@ -332,7 +350,7 @@ app.post('/apply/:id',authenticateToken,  async (req,res) => {
         <p>${recruiterData.firstName+" "+recruiterData.lastName}.</p>
       `
       const mail = {
-        from: 'abhisamudrala2107@gmail.com',
+        from: process.env.MY_MAIL,
         to: prevData.email,
         subject: 'Application Submitted Successfully',
         html: html 
@@ -345,7 +363,6 @@ app.post('/apply/:id',authenticateToken,  async (req,res) => {
             console.log('Email sent:'+ info.response);
         }
     })
-    // console.log("Mail sent successfully")
       res.send(result)
     }).catch((err) => res.send(err))
   }
@@ -363,11 +380,10 @@ app.post('/apply/:id',authenticateToken,  async (req,res) => {
         service: 'gmail',
         secure: false,
         auth: {
-          user: 'abhisamudrala2107@gmail.com',
-          pass: 'vtcy spis pmwe uvba',
+          user: process.env.MY_MAIL,
+          pass: process.env.MY_PASS,
         }
       })
-      console.log(prevData.email)
       const html = `
         <p>Hi ${prevData.username},</p><br/><br/>
         <p>Thankyou for applying for the position of ${jobPostContent.jobTitle} at ${jobPostContent.companyName}.
@@ -377,7 +393,7 @@ app.post('/apply/:id',authenticateToken,  async (req,res) => {
         <p>Abhiteja Samudrala.</p>
       `
       const mail = {
-        from: 'abhisamudrala2107@gmail.com',
+        from: process.env.MY_MAIL,
         to: prevData.email,
         subject: 'Application Submitted Successfully',
         html: html 
@@ -402,11 +418,11 @@ app.post('/login',async (req,res) => {
         res.send({userExists: false})
     }
     else if(password !== prevData.password){
-        res.send("Password not match")
+        res.send({password: false})
     }
     else{
         const id = prevData._id
-        const token = jwt.sign({username,id},'ABHITEJA123',{expiresIn: '5h'})
+        const token = jwt.sign({username,id},process.env.PAYLOAD_SECRET_KEY,{expiresIn: '5h'})
         const prevUserLikes = await Like.findOne({username})
         if(prevUserLikes === null){
           const newUserLike = new Like({
@@ -457,11 +473,50 @@ app.get('/appliedjobs',authenticateToken,async (req,res) => {
 
 app.delete('/withdraw/:id',authenticateToken,async (req,res) => {
   const applicationId = req.params.id 
+  const {username} = req.user 
+  const prevData = await Profile.findOne({username})
+  
   try {
+    const findToBeDeleted = await Application.findOne({_id: applicationId})
+    const freelanceJob = await Job.findOne({_id: findToBeDeleted.jobId})
+    const recruiterData= await User.findOne({_id: findToBeDeleted.recruiterId})
     const deletedDocument = await Application.deleteOne({ _id: applicationId});
+    console.log("DeletedOne",deletedDocument)
+    
     if (!deletedDocument) {
       return res.status(404).send({ error: 'Document not found' });
     }
+    
+    const transport = nodemailer.createTransport({
+      service: 'gmail',
+      secure: false,
+      auth: {
+        user: process.env.MY_MAIL,
+        pass: process.env.MY_PASS,
+      }
+    })
+    const html = `
+      <p>Hi ${prevData.username},</p>
+      <p>Your application for the position of ${freelanceJob.jobTitle} at ${freelanceJob.companyName}
+      has been withdrawn. Stay tuned to our website for more job posts.
+      </p>
+      <p>Regards,</p>
+      <p>${recruiterData.firstName+" "+recruiterData.lastName}.</p>
+    `
+    const mail = {
+      from: 'abhisamudrala2107@gmail.com',
+      to: prevData.email,
+      subject: 'Application Withdrawn Successfully',
+      html: html 
+  };
+  transport.sendMail(mail,(error,info) => {
+      if(error){
+          console.log(error);
+      }
+      else{
+          console.log('Email sent:'+ info.response);
+      }
+  })
     return res.status(200).send({ message: 'Document deleted successfully', deletedDocument });
   } catch (error) {
     return res.status(500).send({ error: 'Internal server error' });

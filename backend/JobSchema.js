@@ -16,8 +16,7 @@ const JobSchema = new mongoose.Schema({
     postedBy: {type: String,required: true}
 });
 
-// const Job = mongoose.model('Job',JobSchema)
-// module.exports = Job
+
 
 const FreelanceJob = mongoose.model('FreelanceJob',JobSchema);
 module.exports = FreelanceJob

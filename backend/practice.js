@@ -6,7 +6,7 @@ const { request } = require('http');
 const {S3Client,DeleteObjectCommand,GetObjectCommand, ListObjectsCommand}=require('@aws-sdk/client-s3');
 const {Upload}=require('@aws-sdk/lib-storage')
 const {getSignedUrl} = require('@aws-sdk/s3-request-presigner')
-
+require('dotenv').config()
 
 const app = express() 
 
@@ -15,14 +15,16 @@ app.listen(8080,() => {
     console.log('server listening on http://localhost:8080')
 })
 
-const ACCESS_KEY = 'AKIA5FTY6YDJXZHMGW4G'
-const SECRET_KEY = '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'
+const ACCESS_KEY = process.env.AWS_ACCESS_KEY 
+const SECRET_KEY = process.env.AWS_SECRET_KEY
 
 
 const storage = multer.memoryStorage()
 
 
 const upload = multer({storage})
+
+
 
 app.set(express.urlencoded({extended : true}))
 
@@ -49,12 +51,12 @@ app.post('/upload', upload.single('fileInput'), (req,res)=>{
         accessKeyId:ACCESS_KEY,
         secretAccessKey:SECRET_KEY,
     },
-    region:'ap-southeast-2',
+    region:process.env.REGION,
    });
    new Upload({
     client:s3Client,
     params:{
-        Bucket:'abhiteja-temp',
+        Bucket:process.env.BUCKET,
         Key:`${req.body.fileName}`,
         Body:req.file.buffer,
         ContentType:req.file.mimetype,
@@ -77,20 +79,20 @@ app.post('/upload', upload.single('fileInput'), (req,res)=>{
   
 app.get('/listFiles', async (req, res) => {
     const command = new ListObjectsV2Command({
-        Bucket: 'abhiteja-temp'
+        Bucket: process.env.BUCKET_NAME 
     });
     const s3Client=new S3Client({
         credentials:{
             accessKeyId:ACCESS_KEY,
             secretAccessKey:SECRET_KEY,
         },
-        region:'ap-southeast-2',
+        region:process.env.REGION,
        });
     const response = await s3Client.send(command);
     let fileURLs = []
     response.Contents.forEach(async (content) =>  {
         const params = {
-            Bucket: 'abhiteja-temp',
+            Bucket: process.env.BUCKET_NAME,
             Key : content.Key
         }
         const command = new GetObjectCommand(params);
@@ -115,10 +117,10 @@ app.delete('/delete/:key', async (req, res) => {
             accessKeyId:ACCESS_KEY,
             secretAccessKey:SECRET_KEY,
         },
-        region:'ap-southeast-2',
+        region:process.env.REGION,
        });
     const input = {
-        Bucket:'abhiteja-temp',
+        Bucket:process.env.BUCKET_NAME,
         Key : req.params.key
     }
  
