@@ -19,7 +19,6 @@ const ImageLogo = () => {
         const DataFetching = await fetch(newUrl, options)
         const DetailsOfUser = await DataFetching.json()
         const {username,profileUrl,bio,firstName,lastName} = DetailsOfUser 
-        // console.log(DetailsOfUser)
 
         setUserDetails({
           ...userDetails,
@@ -36,7 +35,7 @@ const ImageLogo = () => {
 
   const logOut = () => {
     Cookies.remove('jwt_token')
-    return <Redirect to='/login'/>
+    return <Redirect to='/'/>
   }
   const {profileUrl,username,bio,firstName,lastName} = userDetails 
   const first = firstName!==undefined ? (firstName.charAt(0).toUpperCase()+firstName.slice(1)): ""

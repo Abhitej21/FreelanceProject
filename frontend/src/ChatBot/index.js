@@ -1,9 +1,28 @@
 import React,{useEffect, useState,useRef} from 'react'
 import './index.css'
 
+const latestTechnologies = [
+    'React.js',
+    'Node.js',
+    'Express.js',
+    'GraphQL',
+    'TypeScript',
+    'Docker',
+    'Kubernetes',
+    'AWS (Amazon Web Services)',
+    'GCP (Google Cloud Platform)',
+    'Azure',
+    'Machine Learning',
+    'Blockchain',
+    'Serverless Computing',
+    'CI/CD (Continuous Integration/Continuous Deployment)',
+    'Microservices Architecture',
+  ];
+
+
 const ChatBot = () => {
     const [showChatbot,setShowChatbot] = useState(false)
-    const [msgs,setMsgs] = useState([])
+    const [msgs,setMsgs] = useState([{msg: "Hey! How can I help you?",chatBot: true}])
     const [msg,setMsg] = useState('')
     const chatboxRef = useRef(null);
 
@@ -23,7 +42,17 @@ const ChatBot = () => {
             setMsg('')
         }
         setTimeout(() => {
-            setMsgs((msgs) => [...msgs,{msg: "OK",chatBot: true}])
+            const keywords = ['current technologies', 'latest technologies', 'job'];
+            const containsKeywords = keywords.some(keyword =>
+                currMsg.toLowerCase().includes(keyword)
+            );
+            if(containsKeywords){
+                setMsgs((msgs) => [...msgs,{msg: "Here are some of the technologies that can help you get a job: ",chatBot: true}])
+                setMsgs((msgs) => [...msgs,{msg: latestTechnologies,chatBot: true}])
+            }
+            else{
+                setMsgs((msgs) => [...msgs,{msg: "OK",chatBot: true}])
+            }
         },600);
     }
     const changeInput = (e) => {
@@ -38,7 +67,7 @@ const ChatBot = () => {
         {showChatbot && <div className='chatbot'>
 
             <header>
-                <h2>Chatbot</h2>
+                <h2><i class="fa-solid fa-robot"></i>&nbsp;&nbsp;AbhiBot</h2>
             </header>
             
             <ul className='chatbox' ref={chatboxRef}>

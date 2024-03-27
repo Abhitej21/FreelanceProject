@@ -29,15 +29,10 @@ const MainHeader = () => {
   const [bellOpen,setBellOpen] = useState(false)
  const [notifications,setNotifications] = useState([])
 
-  // useEffect(() => {
-    
-  // })
-
-  
-
    useEffect(() => {
     socket.on('message',(msg) => {
       const {wallTime,fullDocument} = msg
+      console.log(msg)
       const filteredNotify = notifications.filter(notification => notification.wallTime === wallTime)
       console.log(notifications)
       if(filteredNotify.length===0){
@@ -51,9 +46,9 @@ const MainHeader = () => {
      })
 
 
-    return () => {
-      socket.off('message');
-    };
+    // return () => {
+    //   socket.off('message');
+    // };
    },[notifications])
   const [condition,setCondition] = useState({bellOpen: false,height: '0px',opacity: 0})
   const bellClicked = () => {
@@ -123,8 +118,13 @@ const MainHeader = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link link-name" href="/appliedjobs">
+            <a className="nav-link link-name" href="/jobs/applied">
               My Applications
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link link-name" href="/jobs/invitations">
+              Invitations
             </a>
           </li>
         </ul>

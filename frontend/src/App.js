@@ -16,12 +16,16 @@ import FeedbackForm from "./FeedbackForm/index.js";
 import { CameraOption } from "./CameraOption/index.js";
 import AppliedJobs from "./AppliedJobs/index.js";
 import ChatBot from "./ChatBot/index.js";
+import ChangePassword from "./ChangePassword/index.js";
+import Invitations from "./Invitations/index.js";
 
 
 const App = () => (
   // <ChatBot/>
   <>
-      <Switch>
+  {/* <LoginPage/> */}
+    {/* <ChangePassword/>  */}
+           <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/jobs" component={JobsDetails} />
@@ -34,12 +38,13 @@ const App = () => (
         <Route exact path="/image" component={ImageLogo} />
 
         <Route exact path="/apply/:id" component={ApplyForm} />
-        <Route exact path="/savedjobs" component={ShowStarred} />
+        <Route exact path="/jobs/saved" component={ShowStarred} />
+        <Route exact path="/jobs/latest" component={LatestJobs} />
+        <Route exact path="/jobs/applied" component={AppliedJobs} />
+        <Route exact path="/jobs/invitations" component={Invitations}/>
         <Route exact path="/profile/:id" component={ProfilePage} />
         <Route exact path="/jobs/:id" component={JobItemDetails} />
-        <Route exact path="/latestjobs" component={LatestJobs} />
         <Route exact path="/feedback" component={FeedbackForm} />
-        <Route exact path="/appliedjobs" component={AppliedJobs} />
       </Switch>
       <ChatBot/>
      </>

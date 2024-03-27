@@ -30,6 +30,8 @@
     color: #ffffff;
   }
 
+  
+
 
 
 
@@ -44,9 +46,13 @@
   .main-jobs-loading{
     width: 75vw;
   }
-  .jobsALlBg {
-    background-color: #000000;
-    color: #ffffff;
+  .jobsAllBg {
+    background-color: #121212;
+    color: white;
+  }
+  .jobsAllBg-white{
+    background-color: whitesmoke;
+    color: black;
   }
   .UserName {
     color: #6366f1;
@@ -57,7 +63,7 @@
     color: #121212;
   }
   .loader-container {
-    background-color: #000000;
+    background-color: #121212;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -70,6 +76,11 @@
   .AllDataOfItems {
     width: 100%;
     margin-top: 18px;
+  }
+  .AllDataOfItems h4{
+    color: white;
+    font-weight: bold;
+    transform: translate(-600px,0)
   }
   .main-box-jobs{
     width: 100vw;

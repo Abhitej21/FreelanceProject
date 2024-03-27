@@ -8,22 +8,24 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 
 const AppliedJobs = () => {
     const [jobs,setJobs] = useState([])
+    const [myJobs,setMyJobs] = useState([])
     const [isLoading,setIsLoading] = useState(true)
+    
     useEffect(() => {
         async function fetchUsername(){
             const jwtToken = Cookies.get('jwt_token')
-            const newUrl = `http://localhost:8000/appliedjobs`
+            const newUrl = `http://localhost:8000/jobs/applied`
             const options = {
                 method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${jwtToken}`,
+                    'Authorization': `Bearer ${jwtToken}`,
                 },
             }
             fetch(newUrl, options)
-            .then( async(response) =>{
+            .then(async(response) =>{
                 const data = await response.json();
-                console.log(data.data)
                 setIsLoading(false)
+                setMyJobs(data.formData)
                 setJobs(data.data)
             })
             
@@ -50,14 +52,17 @@ const AppliedJobs = () => {
               </button>
           </div>
               <div className='home-page-content'>
-               {jobs.length === 0 && <div className='no-img-div'>
+               {jobs.length === 0 && myJobs.length === 0 && <div className='no-img-div'>
                 <img 
                className='no-applications'
                src="https://freepngimg.com/thumb/facebook/72547-thinking-photography-question-mark-man-stock.png"
                 alt="No applications"/>
                 <h1 style={{color: "white"}}>No Applications till now</h1></div>}
                   {jobs && jobs.map((details,index) =>  
-                      <EachApplied key={index} details={details}/>
+                      <EachApplied key={index} isFreelance={true} details={details}/>
+                  )}
+                  {myJobs && myJobs.map((details,index) =>  
+                      <EachApplied key={index} isFreelance={false} details={details}/>
                   )}
               </div>
           </div>

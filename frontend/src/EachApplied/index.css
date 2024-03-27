@@ -8,20 +8,32 @@
     display: flex;
     justify-content: space-between;
 }
+.company-and-logo{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.company-and-logo span{
+  margin-left: 20px;
+}
+
+.image-logo{
+  width: 78px;
+  height: 78px;
+}
+
 
 .rejected{
-  color: red;
-  background-color: white;
-  border: 1px solid red;
+  color: black;
+  background-color: red;
   padding: 10px 15px 10px 15px;
   border-radius: 5px;
   margin-left: 10px;
 }
 
 .pending{
-  color: blue;
-  background-color: white;
-  border: 1px solid blue;
+  color: black;
+  background-color: #ffd84c;
   padding: 10px 15px 10px 15px;
   border-radius: 5px;
   margin-left: 10px;
@@ -33,9 +45,8 @@
 }
 
 .accepted{
-  color: green;
-  background-color: white;
-  border: 1px solid green;
+  color: black;
+  background-color: green;
   padding: 10px 15px 10px 15px;
   border-radius: 5px;
   margin-left: 10px;

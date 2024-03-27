@@ -9,7 +9,7 @@ const ApplyFreelance = (props) => {
         <Link className="link-button" to={`/apply/${each.jobId}`}>
             
             <button className='apply'>
-                <span>APPLY</span>
+                <span>APPLY</span>  
             </button>
         </Link>
     )

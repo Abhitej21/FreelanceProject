@@ -126,7 +126,7 @@ class JobItemDetails extends Component {
             </div>
             <div>
               <a href="/jobs">
-            <button className='close-button'>CLOSE <span>X</span></button>
+            <button className='close-button'>CLOSE</button>
             </a>
             </div>
           </div>

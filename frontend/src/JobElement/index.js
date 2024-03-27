@@ -5,7 +5,8 @@ import Apply from '../Apply'
 
 
 const JobElement = (props) => {
-  const {job} = props
+  const {job,recruiter} = props
+
   console.log("IM in job element")
    return (
 
@@ -20,8 +21,8 @@ const JobElement = (props) => {
     aria-hidden="true"
   >
     <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
-      <div className="modal-content">
-        <div className="modal-header">
+      <div className="modal-content my-modal">
+        <div className="modal-header my-header">
           <h5 className="modal-title" id="exampleModalLongTitle">
             <b>Freelance Job Post</b>
           </h5>
@@ -42,11 +43,11 @@ const JobElement = (props) => {
             <p><strong>{`Job Type: `}</strong>&nbsp;&nbsp;{job.jobType}</p>
             <p><strong>{`Job Scope: `}</strong>&nbsp;&nbsp;{job.jobScope}</p>
             <p><strong>Job Skills: </strong>&nbsp;&nbsp;{job.jobSkills.map(each => {
-                return <span>{each+" "}</span>
+                return <span className='each-skill'>{each+" "}</span>
             })}</p>
             <p><strong>{`Salary Type: `}</strong>&nbsp;&nbsp;{job.salaryType}</p>
             <p><strong>{`Job Salary: `}</strong>&nbsp;&nbsp;{job.jobSalary}</p>
-            <p><strong>{`Recruiter: `}</strong>&nbsp;&nbsp;{job.postedBy}</p>
+            <p><strong>{`Recruiter: `}</strong>&nbsp;&nbsp;{recruiter}</p>
 
         </div>
         <div className="modal-footer">

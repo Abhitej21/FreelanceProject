@@ -13,7 +13,7 @@ const ShowStarred = () => {
     useEffect(() => {
         async function fetchLikedPosts(){ 
         const jwtToken = Cookies.get('jwt_token')
-        const url = `http://localhost:8000/savedjobs`
+        const url = `http://localhost:8000/jobs/saved`
         const options = {
           method: 'GET',
           headers: {
@@ -26,6 +26,7 @@ const ShowStarred = () => {
         const likedList = (storedData && storedData.likes.map(each => each.like_id)) || []
         let tempData = []
         for(const liked of likedList){
+            console.log(liked)
             const eachItem = data.find(each => each.id === liked)
             tempData.push(eachItem)
         }

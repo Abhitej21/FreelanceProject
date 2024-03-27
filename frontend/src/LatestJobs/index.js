@@ -3,10 +3,12 @@ import Cookies from 'js-cookie'
 import './index.css'
 import JobElement from '../JobElement'
 import MainHeader from '../MainHeader'
+import Loader from 'react-loader-spinner'
 
 const LatestJobs = () => {
     const [jobs,setJobs] = useState([])
     const [originalJobs,setOriginalJobs] = useState([]) 
+    const [isLoading,setIsLoading] = useState(true)
     const [index,setIndex] = useState('1')
     const changeByDate = (order) => {
         let jobListByOrder = jobs 
@@ -19,10 +21,9 @@ const LatestJobs = () => {
         setJobs(jobListByOrder)
       }
     useEffect(() => {
-      // console.log("Hi Im in latest jobs")
         async function fetchUsername(){
             const jwtToken = Cookies.get('jwt_token')
-            const newUrl = `http://localhost:8000/latestjobs`
+            const newUrl = `http://localhost:8000/jobs/latest`
             const options = {
                 method: 'GET',
                 headers: {
@@ -35,6 +36,7 @@ const LatestJobs = () => {
            
             setOriginalJobs(data)
             setJobs(data)
+            setIsLoading(false)
         }
         fetchUsername()
     },[])
@@ -51,6 +53,11 @@ const LatestJobs = () => {
       <MainHeader/>
       <div className="list-back">
         <h1 className='latest'>Latest Freelancing Jobs Posted By Recruiters</h1>
+        {isLoading &&  <div className="loader-container-latest" data-testid="loader">
+      <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
+    </div>}
+    {!isLoading && 
+      <div>
         <div className='top-btns'>
         <button type="button" className='back-button'>
           <a href="/jobs" style={{textDecoration: "none",color: "white"}}>
@@ -69,11 +76,12 @@ const LatestJobs = () => {
         </div>
             <div className='home-page-content'>
                 {jobs.map((job,index)  => {
-                  return <JobElement job={job} key={index}/>
+                  return <JobElement job={job.job} recruiter={job.recruiter} key={index}/>
                 }
                  
                 )}
             </div>
+        </div>}
         </div>
         </>
     )

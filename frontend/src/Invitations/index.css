@@ -1,0 +1,17 @@
+.invites{
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.invitation-header{
+    color: rgb(255,255,255);
+    margin-bottom: 20px;
+}
+
+.list-of-invites{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; 
+}

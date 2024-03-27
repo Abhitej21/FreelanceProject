@@ -158,7 +158,7 @@ class JobsDetails extends Component {
     const DetailsOfJobs = await FetchingJobsDetails.json()
 
     const jwtToken = Cookies.get('jwt_token')
-      const url = `http://localhost:8000/savedjobs`
+      const url = `http://localhost:8000/jobs/saved`
       const options = {
         method: 'GET',
         headers: {
@@ -168,6 +168,7 @@ class JobsDetails extends Component {
       }
       const fetchedData = await fetch(url,options)
       const storedData = await fetchedData.json()
+      // console.log(storedData.prevData.likes)
       const likedList = storedData.likes && storedData.likes.map(each => each.like_id) || []
       // console.log(likedList)
 
@@ -366,10 +367,11 @@ class JobsDetails extends Component {
   }
 
   renderALlData = () => {
-    const {totalJobs,listOfSaved} = this.state
+    const {totalJobs} = this.state
 
     return (
       <div className="AllDataOfItems">
+        <h4 style={{fontWeight: "bold"}}>{`Number of Job Posts: ${totalJobs.length}`}</h4>
         {totalJobs.map(each => (
           <JobCard 
           each={each} 
@@ -418,13 +420,13 @@ class JobsDetails extends Component {
       totalJobs.length > 0 ? this.renderALlData() : this.DataNotFound()
 
     return (
-      <div className="jobsALlBg">
+      <div className="jobsAllBg">
         <div className="flexingData">
           <div className="detailsOfAllJobs">
           <div className='main-search'>
             <div className="search-items">
             <button className='free-button'>
-              <a href="/latestjobs" className='free-jobs'>
+              <a href="/jobs/latest" className='free-jobs'>
               <b>Freelance Jobs</b></a>
             </button>
               <div className="searchBar">
@@ -438,7 +440,7 @@ class JobsDetails extends Component {
               <AdvancedSearch/>
               
           
-              <Link to="/savedjobs">
+              <Link to="/jobs/saved">
                   <button type="button" className='saved-button'>Saved Jobs</button>
               </Link>
             </div>
@@ -449,7 +451,7 @@ class JobsDetails extends Component {
               
             
             </div>
-
+            
             {DataOfAllFetching}
           </div>
         </div>
@@ -583,6 +585,7 @@ class JobsDetails extends Component {
               </div>
             </div>
           </div>
+          
           <div className="ChecksData">{this.coditionChecking()}</div>
         </div>
       </div>

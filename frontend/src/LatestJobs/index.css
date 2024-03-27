@@ -10,6 +10,14 @@
     flex-direction: column;
     align-items: center;
 }
+.loader-container-latest{
+    background-color: #121212;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .latest{
     color: white
 }

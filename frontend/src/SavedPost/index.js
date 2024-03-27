@@ -9,18 +9,6 @@ import Button from '../Button';
 
 const SavedPost = props => {
   const {each} = props
-  console.log(each)
-//   const updatedEach = {
-//         jobTitle: each.title,//ok
-//         companyName: each.company_logo_url.split("/")[6].split("-")[0], //ok
-//         jobSalary: each.package_per_annum, //ok
-//         companyLogo: each.company_logo_url, //ok
-//         jobType: each.employment_type, 
-//         id: each.id,
-//         jobDescription: each.job_description,
-//         location: each.location,
-//         rating: each.rating,
-//   }
  
   return (
     <div className="Card">

@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react'
-
+import Spinner from 'react-bootstrap/Spinner';
 import Cookies from 'js-cookie';
 import './index.css'
 import Swal from 'sweetalert2'
@@ -23,6 +23,7 @@ const ApplyForm = () => {
       resume: "",
     })
     const [isLoading,setIsLoading] = useState(true)
+    const [submitLoading,setSubmitLoading] = useState(false)
     const [applied,setApplied] = useState(false)
     useEffect(() => {
       async function fetchDefault(){
@@ -86,7 +87,7 @@ const ApplyForm = () => {
         confirmButtonAriaLabel: "Thumbs up, great!",
       }).then((result) => {
         if(result.isConfirmed){
-          history.push('/latestjobs')
+          history.push('/jobs/latest')
         }
       })}
     }
@@ -98,7 +99,11 @@ const ApplyForm = () => {
 
   const submitApply = async (event) => {
     event.preventDefault()
-    const formData = new FormData(event.target);
+    setSubmitLoading(true)
+    const formData = new FormData();
+    formData.append('startDate',defaultDetails.startDate);
+    formData.append('resume',defaultDetails.resume);
+    // console.log(formData)
     const jwtToken = Cookies.get('jwt_token')
      const {startDate,resume } = defaultDetails
      
@@ -107,14 +112,15 @@ const ApplyForm = () => {
       startDate,
       resume,
      }
-
+    //  console.log(resume)
      const axiosConfig = {
       headers: {
-        Authorization: `Bearer ${jwtToken}`, 
-        'Content-Type': 'application/json', 
+        'Authorization': `Bearer ${jwtToken}`, 
+        'Content-Type': 'multipart/form-data', 
       },
     };
-     axios.post(applyUrl,newDetails,axiosConfig).then(response => {
+     axios.post(applyUrl,formData,axiosConfig).then(response => {
+      setSubmitLoading(false)
       Swal.fire({
         position: "center",
         icon: "success",
@@ -122,6 +128,9 @@ const ApplyForm = () => {
         showConfirmButton: false,
         timer: 1500
       });
+      setTimeout(() => {
+        history.push('/jobs/applied')
+      },1000);
         // alert("Application Submitted Successfully")
         
         }).catch(error => {
@@ -258,32 +267,38 @@ const ApplyForm = () => {
                   className="formbold-form-input"
                 />
               </div>
-
+             
               <div className="formbold-form-file-flex">
                 <label htmlFor="message" className="formbold-form-label">
                   Cover Letter
                 </label>
+                <div className='upload-files'>
                 <input
                   type="file"
                   name="upload"
                   id="upload"
-                  className="formbold-form-file"
+                  // className="formbold-form-file"
                 />
+                </div>
               </div>
               <div className="formbold-form-file-flex">
                 <label htmlFor="upload"  className="formbold-form-label">
                   Upload Resume
                 </label>
+                <div className='upload-files'>
                 <input
                   type="file"
                   name="resume"
                   accept=".doc,.docx,.pdf"
                   id="upload"
                   onChange={handleResume}
-                  className="formbold-form-file"
+                  // className="formbold-form-file"
                 />
+                </div>
               </div>
-              <button className="formbold-btn" type="submit">Apply Now</button>
+              <button className="formbold-btn" type="submit">
+                {submitLoading && <Spinner animation="border" size="sm" />}
+                &nbsp;&nbsp;Apply Now</button>
             </form>
           </div>
         </div> }

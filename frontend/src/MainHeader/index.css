@@ -27,7 +27,7 @@
 }
 .bell{
     font-size: 30px;
-    transform: translate(-30px,-5px);
+    transform: translate(-30px,-10px);
     z-index: 15;
 }
 .bell:hover{

@@ -97,6 +97,21 @@
   text-transform: uppercase;
 
 }
+.each-skill{
+   background-color: rgb(254, 254, 139);
+   padding: 10px;
+   margin-right: 5px;
+}
+.logo-at-view{
+  height: 50px;
+  width: 50px;
+}
+.my-modal{
+  background-color: rgb(255,255,255);
+}
+.my-header{
+  background-color: yellow;
+}
 
 .btn-31:before {
   --progress: 100%;

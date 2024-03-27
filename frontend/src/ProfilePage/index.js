@@ -60,8 +60,6 @@ const ProfilePage = () => {
     lastname: "",
     org: "",
     email: "",
-    password: "",
-    confirmPassword: "",
     skills: [],
     bio: "",
     dob: "",
@@ -186,43 +184,10 @@ const ProfilePage = () => {
 
   const submitDetails = async (event) => {
     event.preventDefault();
-    const {
-      username,
-      firstname,
-      lastname,
-      phone,
-      dob,
-      userBio,
-      org,
-      email,
-      userAbout,
-      userSkills,
-      location,
-      github,
-      linkedin,
-      profileUrl,
-    } = userDetails;
-    const newDetails = {
-      username,
-      firstname,
-      lastname,
-      phone,
-      org,
-      dob,
-      userBio,
-      email,
-      userAbout,
-      userSkills,
-      location,
-      github,
-      linkedin,
-      profileUrl,
-    };
     const postUrl = `http://localhost:8000/profile/${userDetails.username}`;
     axios
-      .post(postUrl, newDetails)
+      .post(postUrl, userDetails)
       .then((response) => {
-        // console.log(response)
         Swal.fire({
           position: "center",
           icon: "success",
@@ -230,7 +195,6 @@ const ProfilePage = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        // alert("Profile Updated Successfully")
       })
       .catch((error) => {
         console.log(error);
