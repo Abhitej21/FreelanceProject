@@ -18,6 +18,6 @@ const JobSchema = new mongoose.Schema({
 
 
 
-const FreelanceJob = mongoose.model('FreelanceJob',JobSchema);
-module.exports = FreelanceJob
+const MyJob = mongoose.model('MyJob',JobSchema);
+module.exports = MyJob
 
