@@ -1,5 +1,6 @@
 .each-card{
-    background-color: rgb(47,51,50);
+    background-color: #1e1d1e;
+    /* background-color: rgb(47,51,50); */
     color: white;
     width: 70vw;
     border-radius: 15px;

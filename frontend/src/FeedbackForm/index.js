@@ -84,7 +84,6 @@ function updateTestimonials(){
   }
   
   idx++;
-  console.log(idx)
   if(idx > testimonials.length - 1){
     idx = 0;
   }

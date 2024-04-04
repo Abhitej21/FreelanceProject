@@ -1,5 +1,6 @@
 .each-card{
-    background-color: rgb(47,51,50);
+    /* background-color: rgb(47,51,50); */
+    background-color: #1e1d1e;
     color: white;
     width: 70vw;
     border-radius: 15px;
@@ -100,7 +101,7 @@
   font-weight: 900;
   line-height: 1.5;
   margin: 0;
-  -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
+  -webkit-mask-image: -webkit-radial-gradient(#1e1d1e, #fff);
   padding: 0;
 }
 
@@ -147,7 +148,7 @@
 .btn-31:before {
   --progress: 100%;
   background: #fff;
-  color: black;
+  color: #1e1d1e;
   -webkit-clip-path: polygon(
     100% 0,
     var(--progress) var(--progress),

@@ -5,17 +5,6 @@ import AWS from 'aws-sdk'
 import Cookies from 'js-cookie'
 
 
-
-
-
-const AWS_ACCESS_KEY = 'AKIA5FTY6YDJXZHMGW4G' 
-
-const AWS_SECRET_KEY = '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'
-
-const BUCKET_NAME = 'abhiteja-temp'
-
-const REGION = 'ap-southeast-2'
-
 const APPLICATION_STATUS = {
     1: 'Pending',
     2: 'Accepted',
@@ -30,6 +19,7 @@ const styling = {
 
 const EachApplied = (props) => {
    const {details,isFreelance} = props 
+//    console.log(details)
    const status = details.status+1
    const [isLoading,setIsLoading] = useState(true)
    const [pdfUrl,setPdfUrl] = useState(null)
@@ -70,18 +60,17 @@ const EachApplied = (props) => {
    const viewPdf = async () => {
         try{
             const s3 = new AWS.S3({
-                accessKeyId: AWS_ACCESS_KEY,
-                secretAccessKey: AWS_SECRET_KEY,
-                region: REGION,
+                accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
+                secretAccessKey: process.env.REACT_APP_AWS_SECRET_KEY,
+                region: process.env.REACT_APP_REGION,
             })
             const params = {
-                Bucket: BUCKET_NAME,
-                Key : 'teja_resume' + '.pdf',
+                Bucket: process.env.REACT_APP_BUCKET_NAME,
+                Key : details.applicationId + '.pdf',
             }
             const data = await s3.getObject(params).promise()
             const pdfData = new Blob([data.Body],{type: 'application/pdf'})
             const url = URL.createObjectURL(pdfData)
-            console.log(url)
             window.open(url,'_blank')
             setPdfUrl(url)
         }
@@ -95,7 +84,7 @@ const EachApplied = (props) => {
     return date.toLocaleDateString('en-US', options);
     }
 
-    const companyName = !isFreelance?details.jobData.companyName:''
+    const companyName = !isFreelance? details.jobData && details.jobData.companyName:''
     const format = !isFreelance ? companyName.charAt(0).toUpperCase() + companyName.substring(1):''
     
    return (

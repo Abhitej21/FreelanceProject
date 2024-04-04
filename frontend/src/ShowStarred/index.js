@@ -26,7 +26,6 @@ const ShowStarred = () => {
         const likedList = (storedData && storedData.likes.map(each => each.like_id)) || []
         let tempData = []
         for(const liked of likedList){
-            console.log(liked)
             const eachItem = data.find(each => each.id === liked)
             tempData.push(eachItem)
         }

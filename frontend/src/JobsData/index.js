@@ -11,11 +11,13 @@ import AdvancedSearch from '../AdvancedSearch'
 import ToggleMode from '../ToggleMode'
 import { mainToken } from '../data'
 import MainHeader from '../MainHeader'
-
-import { Redirect } from 'react-router-dom/cjs/react-router-dom.min'
+import io from 'socket.io-client'
+import { Redirect,withRouter } from 'react-router-dom/cjs/react-router-dom.min'
 import FilterOptions from '../FilterOptions'
-// require('dotenv').config()
-// require('dotenv').config()
+import Swal from 'sweetalert2'
+
+
+
 
 const experienceLevels = [
     {
@@ -108,8 +110,9 @@ const stagesForConditionChecking = {
 
 class JobsDetails extends Component {
 
-
+  socket = io.connect('http://localhost:8000')
   state = {
+    temp: 0,
     name: '',
     imageUser: '',
     Description: '',
@@ -128,13 +131,59 @@ class JobsDetails extends Component {
 	 
 
   async componentDidMount() {
-    // await this.showProfile()
     await this.FetchingData()
     await this.jobsData()
+    await this.showProfile()
+    this.socket.on('message', this.handleSocketMessage);
   }
 
-  showProfile() {
-      
+  handleSocketMessage = (msg) => {
+    const { wallTime, fullDocument } = msg;
+    console.log("new Job added:",fullDocument)
+    const prev = this.state.totalJobs
+    const newDocument = {...fullDocument,datePosted: new Date(fullDocument.datePosted)}
+    this.setState({totalJobs: [...prev,newDocument]})
+    }
+
+
+  componentWillUnmount() {
+    this.socket.off('message', this.handleSocketMessage);
+  }
+  showProfile = async () => {
+    const jwtToken = Cookies.get('jwt_token')
+    const newUrl = 'http://localhost:8000/profile'
+    const options = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    }
+    const DataFetching = await fetch(newUrl, options)
+    const DetailsOfUser = await DataFetching.json()
+    const {username} = DetailsOfUser
+    if(DetailsOfUser.addProfile === true) {
+      Swal.fire({
+      title: "Profile Update",
+      text: "Need to update your profile before accessing the JobStreet Portal",
+      imageUrl: "https://res.cloudinary.com/da7y99axc/image/upload/v1711741848/profile-icon-png-898_bezbbd.png",
+      imageWidth: 200,
+      imageHeight: 200,
+      imageAlt: "Profile Picture",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ok"
+    }).then((result) => {
+      console.log(result)
+      if(result.isConfirmed){
+        this.props.history.push(`/profile/${username}`)
+      }
+      else if(result.isDismissed){
+        this.showProfile()
+      }
+    });
+    }
+    
   }
 
   getRandomDate() {
@@ -230,12 +279,11 @@ class JobsDetails extends Component {
     }
     const DataFetching = await fetch(newUrl, options)
     const DetailsOfUser = await DataFetching.json()
-
-
+    console.log(DetailsOfUser)
     if (DataFetching.ok) {
       this.setState({
         name: DetailsOfUser.username,
-        Description: DetailsOfUser.firstName !== ""?DetailsOfUser.firstName :"HELLO",
+        Description: DetailsOfUser.userBio,
         imageUser: DetailsOfUser.profileUrl !== "" ? DetailsOfUser.profileUrl:'https://res.cloudinary.com/da7y99axc/image/upload/v1709389286/dkvz3tcsezlnevxlgmft.jpg',
         CheckingProfileData: stagesForConditionChecking.success,
       })
@@ -243,13 +291,15 @@ class JobsDetails extends Component {
       this.setState({CheckingProfileData: stagesForConditionChecking.failure})
     }
   }
-
+  errorImage = (event) => {
+      event.target.src = "https://res.cloudinary.com/da7y99axc/image/upload/v1711741848/profile-icon-png-898_bezbbd.png"
+  }
   successViewProfile =  () => {
     const {imageUser, name, Description} = this.state
     return (
       <div className="CardOfUser">
         <div>
-          <img className="imageOfUser" src={imageUser} alt="profile" />
+          <img className="imageOfUser" src={imageUser} onError={this.errorImage} alt="profile" />
         </div>
         <h1 className="UserName">{name.toUpperCase()}</h1>
         <p className="Description">{Description}</p>
@@ -344,7 +394,6 @@ class JobsDetails extends Component {
       }
       const DataFetching = await fetch(url, options)
       const DetailsOfUser = await DataFetching.json()
-      // console.log(DetailsOfUser.likes)
       const likedList = DetailsOfUser.likes.map(each => each.like_id)
         this.setState({listOfSaved: likedList})
     }
@@ -360,7 +409,6 @@ class JobsDetails extends Component {
         }
         const DataFetching = await fetch(url, options)
         const DetailsOfUser = await DataFetching.json()
-        // console.log(DetailsOfUser.likes)
         const likedList = DetailsOfUser.likes.map(each => each.like_id)
         this.setState({listOfSaved: likedList})
     }
@@ -437,7 +485,7 @@ class JobsDetails extends Component {
               onKeyDown={this.searchInputDown}/>
               </div>
 
-              <AdvancedSearch/>
+              {/* <AdvancedSearch/> */}
               
           
               <Link to="/jobs/saved">
@@ -594,7 +642,7 @@ class JobsDetails extends Component {
   }
 }
 
-export default JobsDetails
+export default withRouter(JobsDetails)
 
 
 

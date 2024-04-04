@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 
 
 const ProfileSchema = mongoose.Schema({
-    username: {type: String,required: true},//..
+    username: {type: String,required: true},
+    // username: {type: mongoose.Schema.Types.ObjectId,ref: 'SignUp',required: true},//..
     firstName: {type: String,required: true,defaultValue: ''},
     lastName: {type: String,required: true,defaultValue: ''},
     email: {type: String,required: true,defaultValue: ''},//..

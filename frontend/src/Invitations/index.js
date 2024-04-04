@@ -4,6 +4,7 @@ import Cookies from 'js-cookie'
 import EachInvitation from '../EachInvitation'
 import Loader from 'react-loader-spinner'
 import MainHeader from '../MainHeader'
+import BackBtn from '../BackBtn'
 
 const Invitations = () => {
     const [invites,setInvites] = useState([])
@@ -38,9 +39,16 @@ const Invitations = () => {
     }
     
     return (
-        <>  
+        <div className='invitaions-back'>  
             <MainHeader/>
-            {invites.length === 0 && <h3>No Invitations Received</h3>}
+            <div className='align-back'>
+                <BackBtn/>
+            </div>
+            {invites.length === 0 && <div className='no-invites'>
+                <h3>No Invitations Received</h3>
+                <img src='https://res.cloudinary.com/da7y99axc/image/upload/v1711867576/noinvites-removebg-preview_k9pebp.png'
+                alt="No Invitations" className='no-invites-img'/>
+                </div>}
             {invites.length !== 0 && 
               <div className='invites'>
                 <h2 className='invitation-header'>Invites from Recruiters</h2>
@@ -49,7 +57,7 @@ const Invitations = () => {
                 })}</div>
             </div>
             }
-        </>
+        </div>
     )
 }
 

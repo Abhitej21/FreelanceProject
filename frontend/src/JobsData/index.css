@@ -25,7 +25,7 @@
     padding: 12px;
     margin-bottom: 18px;
     border-radius: 22px;
-    background-color: #121212;
+    background-color: #1e1d1e;
     text-decoration: none;
     color: #ffffff;
   }
@@ -138,6 +138,7 @@
     width: 22vw;
     height: calc(100vh - 105px);
     overflow: auto;
+    background-color: #1e1d1e;
   } 
 
   .ProfileSide::-webkit-scrollbar, .ChecksData::-webkit-scrollbar {
@@ -431,8 +432,9 @@
 .saved-button {
   --primary-color: #000;
   --secondary-color: #fff;
-  --border-color: #000;
-  background-color: var(--primary-color);
+  --border-color: #121212;
+  /* background-color: var(--primary-color); */
+  background-color: #121212;
   border: 2px solid var(--border-color);
   color: var(--secondary-color);
   padding: 10px 20px;

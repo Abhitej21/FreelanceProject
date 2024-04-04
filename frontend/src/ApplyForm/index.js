@@ -43,6 +43,7 @@ const ApplyForm = () => {
             return
           }
           setIsLoading(false)
+         
           setDefaultDetails({...defaultDetails,
             firstname: DetailsOfUser.prevData.firstName,
             lastname: DetailsOfUser.prevData.lastName,
@@ -51,7 +52,10 @@ const ApplyForm = () => {
             jobTitle: DetailsOfUser.jobTitle,
             location: DetailsOfUser.location,
             companyName: DetailsOfUser.companyName,
+            companyLogo: DetailsOfUser.companyLogo
           })
+
+          console.log(defaultDetails)
       }
       fetchDefault()
   },[])
@@ -93,9 +97,7 @@ const ApplyForm = () => {
     }
   },[applied])
 
-  // const handleResume = (e) => {
 
-  // }
 
   const submitApply = async (event) => {
     event.preventDefault()
@@ -112,7 +114,6 @@ const ApplyForm = () => {
       startDate,
       resume,
      }
-    //  console.log(resume)
      const axiosConfig = {
       headers: {
         'Authorization': `Bearer ${jwtToken}`, 
@@ -120,6 +121,7 @@ const ApplyForm = () => {
       },
     };
      axios.post(applyUrl,formData,axiosConfig).then(response => {
+      console.log("Oreyyy",response)
       setSubmitLoading(false)
       Swal.fire({
         position: "center",
@@ -131,13 +133,12 @@ const ApplyForm = () => {
       setTimeout(() => {
         history.push('/jobs/applied')
       },1000);
-        // alert("Application Submitted Successfully")
         
         }).catch(error => {
           console.log(error);
         })
   }
-  const {firstname,lastname,phone,email,jobTitle,startDate,companyName,location} = defaultDetails
+  const {firstname,lastname,phone,email,companyLogo,jobTitle,startDate,companyName,location} = defaultDetails
     if(isLoading){
       return <div className="loader-container" data-testid="loader">
       <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
@@ -150,6 +151,12 @@ const ApplyForm = () => {
        <div className="formbold-main-wrapper">
           <div className="formbold-form-wrapper">
             <img className="formbold-img" src="https://t3.ftcdn.net/jpg/03/13/59/86/360_F_313598658_3TUnxxAvA2v4oDdcAKAYVh15782FcrtW.jpg" />
+            
+            {companyLogo && <div style={{display: "flex",alignItems: "center",marginBottom: "15px"}}>
+                <img style={{height: "50px",marginRight: "8px"}} src={companyLogo}/>
+                <h4 style={{color: "white"}}>{companyName}</h4>
+             </div> 
+              }
             <p className='applying-for'>{`Applying for ${jobTitle} at ${companyName}, ${location}`}</p>
             <form onSubmit={submitApply}>
               <div className="formbold-input-flex">

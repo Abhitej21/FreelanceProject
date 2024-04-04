@@ -60,8 +60,8 @@
   
   .dropdown:hover .drop-content {
     display: block;
-  align-items: space-between;
-  padding: 15px;
+    align-items: space-between;
+    padding: 15px;
 }
   
   .dropdown:hover .dropbtn {background-color: #3e8e41;}

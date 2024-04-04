@@ -18,10 +18,11 @@ import AppliedJobs from "./AppliedJobs/index.js";
 import ChatBot from "./ChatBot/index.js";
 import ChangePassword from "./ChangePassword/index.js";
 import Invitations from "./Invitations/index.js";
+import ForgotPassword from "./ForgotPassword/index.js";
+import ResetPassword from "./ResetPassword/index.js";
 
 
 const App = () => (
-  // <ChatBot/>
   <>
   {/* <LoginPage/> */}
     {/* <ChangePassword/>  */}
@@ -45,8 +46,11 @@ const App = () => (
         <Route exact path="/profile/:id" component={ProfilePage} />
         <Route exact path="/jobs/:id" component={JobItemDetails} />
         <Route exact path="/feedback" component={FeedbackForm} />
+        <Route exact path="/forgot-password" component={ForgotPassword}/>
+        <Route exact path="/reset-password/:id/:token" component={ResetPassword}/>
+        
       </Switch>
-      <ChatBot/>
+     {/* <ChatBot/> */}
      </>
   );
 

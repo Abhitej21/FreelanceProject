@@ -6,8 +6,6 @@ import Apply from '../Apply'
 
 const JobElement = (props) => {
   const {job,recruiter} = props
-
-  console.log("IM in job element")
    return (
 
     <>

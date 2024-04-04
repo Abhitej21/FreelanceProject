@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const {User} = require('./TempUserSchema');
-const Schema = mongoose.Schema;
+
 
 const jobSchema = new mongoose.Schema({
     companyName : {type : String , required : true},

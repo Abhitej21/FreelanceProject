@@ -19,10 +19,31 @@ const latestTechnologies = [
     'Microservices Architecture',
   ];
 
+  const defaultQuestions = [
+    "What is your name?",
+    "How are you today?",
+    "Where are you from?",
+    "What is your favorite color?"
+  ];
+
+  const defaultAnswers = {
+    "What is your name?": "My name is Chatbot.",
+    "How are you today?": "I'm just a bot, so I don't have feelings, but thanks for asking!",
+    "Where are you from?": "I exist in the digital realm, so I'm everywhere and nowhere at the same time.",
+    "What is your favorite color?": "I don't have eyes to see colors, but I like all colors equally!"
+  };
+
 
 const ChatBot = () => {
     const [showChatbot,setShowChatbot] = useState(false)
-    const [msgs,setMsgs] = useState([{msg: "Hey! How can I help you?",chatBot: true}])
+    const fixed = defaultQuestions.map(each => {
+        return {
+            msg: each,
+            chatBot: true,
+            fix: true,
+        }
+    })
+    const [msgs,setMsgs] = useState(fixed)
     const [msg,setMsg] = useState('')
     const chatboxRef = useRef(null);
 
@@ -69,13 +90,17 @@ const ChatBot = () => {
             <header>
                 <h2><i class="fa-solid fa-robot"></i>&nbsp;&nbsp;AbhiBot</h2>
             </header>
+
+            
             
             <ul className='chatbox' ref={chatboxRef}>
                 {msgs && msgs.map(eachMsg => {
+                    
                     if(eachMsg.chatBot){
                         return <li className='chat incoming'>
+                            {
                             <span className=''>
-                            <i class="fa-solid fa-robot"></i></span>
+                            <i class="fa-solid fa-robot"></i></span>}
                             <p>{eachMsg.msg}</p>
                         </li>
                     }

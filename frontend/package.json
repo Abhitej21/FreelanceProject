@@ -9,6 +9,7 @@
     "@mui/material": "^5.15.11",
     "@reduxjs/toolkit": "^2.2.1",
     "@rsuite/icons": "^1.0.3",
+    "@socket.io/admin-ui": "^0.5.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

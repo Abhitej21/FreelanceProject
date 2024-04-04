@@ -3,7 +3,8 @@
   margin: 22px;
   border-radius: 22px;
   padding: 22px;
-  background-color: #121212;
+  /* background-color: white; */
+  background: white;
 }
 .heart{
   padding: 20px;

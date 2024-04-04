@@ -29,11 +29,7 @@ const videoConstraints = {
 
 const ProfilePage = () => {
   
-//   const history = useHistory();
-//   useEffect(() => {
-//     alert("PUSHING NOW");
-//     history.push("/jobs");
-//   }, []);console.log("jhgfdfgh");
+  const history = useHistory();
   const [files, setFiles] = useState();
   const [previews, setPreviews] = useState();
   const [userExists, setUserExists] = useState(true);
@@ -60,12 +56,12 @@ const ProfilePage = () => {
     lastname: "",
     org: "",
     email: "",
-    skills: [],
-    bio: "",
+    userSkills: [],
+    userBio: "",
     dob: "",
     location: "",
     phone: "",
-    about: "",
+    userAbout: "",
     github: "",
     linkedin: "",
     profileUrl: "",
@@ -83,8 +79,7 @@ const ProfilePage = () => {
       };
       const DataFetching = await fetch(newUrl, options);
       const DetailsOfUser = await DataFetching.json();
-      // console.log("My Data",DetailsOfUser)
-      const { username, data, userId } = DetailsOfUser;
+      const { username, data, userId ,email} = DetailsOfUser;
       // console.log(data)
       if (data && data.isNull === true) {
         setUserExists(false);
@@ -96,14 +91,14 @@ const ProfilePage = () => {
         firstname: (data && data.firstName) || "",
         lastname: (data && data.lastName) || "",
         org: (data && data.org) || "",
-        email: (data && data.email) || "",
-        bio: (data && data.userBio) || "",
-        skills: (data && data.userSkills) || [],
+        email: email,
+        userBio: (data && data.userBio) || "",
+        userSkills: (data && data.userSkills) || [],
         dob: (data && data.dob) || "",
         location: (data && data.location) || "",
         phone: (data && data.phone) || "",
         github: (data && data.github) || "",
-        about: (data && data.userAbout) || "",
+        userAbout: (data && data.userAbout) || "",
         linkedin: (data && data.linkedin) || "",
         profileUrl: (data && data.profileUrl) || "",
         prevData: data,
@@ -134,21 +129,23 @@ const ProfilePage = () => {
   const handleEmailChange = (event) =>
     setUserDetails({ ...userDetails, email: event.target.value });
   const handleBioChange = (event) =>
-    setUserDetails({ ...userDetails, bio: event.target.value });
+    setUserDetails({ ...userDetails, userBio: event.target.value });
   const handlePhoneChange = (event) =>
     setUserDetails({ ...userDetails, phone: event.target.value });
   const handleAboutChange = (event) =>
-    setUserDetails({ ...userDetails, about: event.target.value });
+    setUserDetails({ ...userDetails, userAbout: event.target.value });
   const handleBirthdayChange = (event) =>
     setUserDetails({ ...userDetails, dob: event.target.value });
   const handleSkillChange = (event) => {
     const newSkill = event.target.value;
+    console.log(newSkill)
     setUserDetails({
       ...userDetails,
-      skills: userDetails.skills.includes(newSkill)
-        ? [...userDetails.skills]
-        : [...userDetails.skills, newSkill],
+      userSkills: userDetails.userSkills.includes(newSkill)
+        ? [...userDetails.userSkills]
+        : [...userDetails.userSkills, newSkill],
     });
+    // console.log(userDetails.skills)
   };
 
   const handleGithubUrlChange = (event) =>
@@ -168,13 +165,11 @@ const ProfilePage = () => {
   }, [webcamRef]);
 
   const submitPhoto = (event) => {
-    console.log(typeof url);
     const postUrl = `http://localhost:8000/profile/${userDetails.username}`;
     const newDetails = { ...userDetails, profileUrl: url };
     axios
       .post(postUrl, newDetails)
       .then((response) => {
-        console.log(response);
         alert("Profile Picture Updated Successfully");
       })
       .catch((error) => {
@@ -195,6 +190,9 @@ const ProfilePage = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        setTimeout(() => {
+          history.push("/jobs");
+        },1500);
       })
       .catch((error) => {
         console.log(error);
@@ -208,13 +206,16 @@ const ProfilePage = () => {
   const { username, prevData, userId } = userDetails;
   if (userExists === false) {
     return (
+      <>
+      <MainHeader/>
       <div className="no-user-found">
         <img
           src="https://res.cloudinary.com/da7y99axc/image/upload/v1710580985/Profiling-rafiki_cll0ze.png"
           alt="No User Found"
         />
-        <h1>{`NO USER FOUND ${"\u{1F9D0}"}`}</h1>
+        <h1 style={{color: "white"}}>{`NO USER FOUND ${"\u{1F9D0}"}`}</h1>
       </div>
+      </>
     );
   }
   if (isLoading === true) {
@@ -306,7 +307,7 @@ const ProfilePage = () => {
                           <Webcam
                             audio={false}
                             width={540}
-                            height={360}
+                            height={300}
                             ref={webcamRef}
                             screenshotFormat="image/jpeg"
                             videoConstraints={videoConstraints}
@@ -356,7 +357,7 @@ const ProfilePage = () => {
               <form onSubmit={submitDetails}>
                 {/* Form Group (username)*/}
                 <div className="mb-3">
-                  <label className="small mb-1" htmlFor="inputUsername">
+                  <label className="small mb-1 req" htmlFor="inputUsername">
                     Username (how your name will appear to other users on the
                     site)
                   </label>
@@ -374,7 +375,7 @@ const ProfilePage = () => {
                 <div className="row gx-3 mb-3">
                   {/* Form Group (first name)*/}
                   <div className="col-md-6">
-                    <label className="small mb-1" htmlFor="inputFirstName">
+                    <label className="small mb-1 req" htmlFor="inputFirstName">
                       First name
                     </label>
                     <input
@@ -394,7 +395,7 @@ const ProfilePage = () => {
                   </div>
                   {/* Form Group (last name)*/}
                   <div className="col-md-6">
-                    <label className="small mb-1" htmlFor="inputLastName">
+                    <label className="small mb-1 req" htmlFor="inputLastName">
                       Last name
                     </label>
                     <input
@@ -413,8 +414,8 @@ const ProfilePage = () => {
                 </div>
 
                 <div className="mb-3">
-                  <label className="small mb-1" htmlFor="bio">
-                    Bio
+                  <label className="small mb-1 req" htmlFor="bio">
+                    Role
                   </label>
                   <input
                     className="form-control"
@@ -434,7 +435,7 @@ const ProfilePage = () => {
                 <div className="row gx-3 mb-3">
                   {/* Form Group (organization name)*/}
                   <div className="col-md-6">
-                    <label className="small mb-1" htmlFor="inputOrgName">
+                    <label className="small mb-1 req" htmlFor="inputOrgName">
                       Organization name
                     </label>
                     <input
@@ -452,7 +453,7 @@ const ProfilePage = () => {
                   </div>
                   {/* Form Group (location)*/}
                   <div className="col-md-6">
-                    <label className="small mb-1" htmlFor="inputLocation">
+                    <label className="small mb-1 req" htmlFor="inputLocation">
                       Location
                     </label>
                     <input
@@ -471,7 +472,7 @@ const ProfilePage = () => {
                 </div>
                 {/* Form Group (email address)*/}
                 <div className="mb-3">
-                  <label className="small mb-1" htmlFor="inputEmailAddress">
+                  <label className="small mb-1 req" htmlFor="inputEmailAddress">
                     Email address
                   </label>
                   <input
@@ -491,7 +492,7 @@ const ProfilePage = () => {
                 <div className="row gx-3 mb-3">
                   {/* Form Group (phone number)*/}
                   <div className="col-md-6">
-                    <label className="small mb-1" htmlFor="inputPhone">
+                    <label className="small mb-1 req" htmlFor="inputPhone">
                       Phone number
                     </label>
                     <input
@@ -509,7 +510,7 @@ const ProfilePage = () => {
                   </div>
                   {/* Form Group (birthday)*/}
                   <div className="col-md-6">
-                    <label className="small mb-1" htmlFor="inputBirthday">
+                    <label className="small mb-1 req" htmlFor="inputBirthday">
                       Date of Birth
                     </label>
                     <input
@@ -534,12 +535,12 @@ const ProfilePage = () => {
                   {userDetails.userSkills &&
                     userDetails.userSkills.map((each) => {
                       const skillname = each;
-                      return <span className="skill-box">{skillname}</span>;
+                      return <span  key={each} className="skill-box">{skillname}</span>;
                     })}
                 </div>
                 <div className="row mb-3 gx-3">
                   <div className="col-12">
-                    <label className="small" htmlFor="skill">
+                    <label className="small req" htmlFor="skill">
                       Select a Skill:
                     </label>
                     <select
@@ -562,7 +563,7 @@ const ProfilePage = () => {
                 </div>
 
                 <div className="mb-3">
-                  <label className="small mb-1" htmlFor="userAbout">
+                  <label className="small mb-1 req" htmlFor="userAbout">
                     About
                   </label>
                   <textarea
@@ -581,7 +582,7 @@ const ProfilePage = () => {
 
                 <div className="row mb-3 gx-3">
                   <div className="col-12">
-                    <label className="small mb-1" htmlFor="url">
+                    <label className="small mb-1 req" htmlFor="url">
                       Enter github url
                     </label>
                     <input
@@ -604,7 +605,7 @@ const ProfilePage = () => {
 
                 <div className="row mb-3 gx-3">
                   <div className="col-12">
-                    <label className="small mb-1" htmlFor="url">
+                    <label className="small mb-1 req" htmlFor="url">
                       Enter LinkedIn url
                     </label>
                     <input

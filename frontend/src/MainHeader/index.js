@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import ImageLogo from "../ImageLogo";
 import io from 'socket.io-client'
 import './index.css'
+import Cookies from 'js-cookie'
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import NotificationBadge from 'react-notification-badge';
 import { Effect } from 'react-notification-badge';
@@ -27,14 +28,32 @@ const prevNotifications = [
 const socket = io.connect('http://localhost:8000')
 const MainHeader = () => {
   const [bellOpen,setBellOpen] = useState(false)
+  const [count,setCount] = useState(0)
  const [notifications,setNotifications] = useState([])
-
+//  useEffect(() => {
+//   async function fetchNotifications(){
+//       const jwtToken = Cookies.get('jwt_token')
+//       const newUrl = `http://localhost:8000/notifications`
+//       const options = {
+//           method: 'GET',
+//           headers: {
+//               'Authorization': `Bearer ${jwtToken}`,
+//           },
+//       }
+//       fetch(newUrl, options)
+//       .then(async(response) =>{
+//           const data = await response.json();
+//           setNotifications(data);
+//       })
+      
+//   }
+//   fetchNotifications()
+// },[])
    useEffect(() => {
     socket.on('message',(msg) => {
       const {wallTime,fullDocument} = msg
-      console.log(msg)
+      console.log(fullDocument.companyLogo)
       const filteredNotify = notifications.filter(notification => notification.wallTime === wallTime)
-      console.log(notifications)
       if(filteredNotify.length===0){
         setNotifications((prev) => [{
           wallTime: wallTime,
@@ -43,12 +62,11 @@ const MainHeader = () => {
           text: `New Job Post from ${fullDocument.companyName}`,
         },...prev])
       }
+      setCount((count) => count+1)
      })
-
-
-    // return () => {
-    //   socket.off('message');
-    // };
+    return () => {
+      socket.off('message');
+    };
    },[notifications])
   const [condition,setCondition] = useState({bellOpen: false,height: '0px',opacity: 0})
   const bellClicked = () => {
@@ -72,7 +90,16 @@ const MainHeader = () => {
         })
       }
 
+     
   }
+
+  const errorImage = (error) => {
+    console.log("Error in loading the image")
+  }
+  const onBellClick = () => {
+    setCount(0)
+  }
+
     return <>
   {/* Navbar */}
   <nav className="navbar navbar-expand-lg navbar-light bg-body-tertiary nav">
@@ -95,7 +122,7 @@ const MainHeader = () => {
         {/* Navbar brand */}
         <div className='logo-name'>
                     <Link to="/" className="link">
-                      <span>Abh<span className='ex'>!</span></span>
+                      <span>Job<span className='ex'>Street </span></span>
                     </Link>
         </div>
         {/* Left links */}
@@ -132,20 +159,23 @@ const MainHeader = () => {
         {/* Notifications */}
 
          <div className="dropdown">
-          <div className='badge'><NotificationBadge count={notifications.length} effect={Effect.SCALE}/></div>
-      <div>  <i className="fa-regular fa-bell bell"></i></div>
+          <div onMouseEnter={() => onBellClick()}>
+          <div className='badge'><NotificationBadge count={count} effect={Effect.SCALE}/></div>
+      <div>  <i className="fa-regular fa-bell bell"></i></div></div>
          
          
                 <div className="dropdown-content">
                   {notifications.length===0 && <p style={{color: "black",marginLeft: "40px"}}>No Notifications found</p>}
                 {notifications.length>0 && <ul>
                   {notifications.map((each) => {
+                    const text = `New Job Post from ${each.name}`
                      return <li>
                        <div className="notifications-item">
-                       <img src={each.imgUrl} alt="img"/>
+                       <img src={each.imgUrl} alt="img"
+                       onError={errorImage}/>
                           <div className="text">
                               <h4>{each.name}</h4>
-                              <p>{each.text}</p>
+                              <p>{text}</p>
                           </div>
                       </div>
                      </li>

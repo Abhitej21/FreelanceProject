@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const LikeSchema = mongoose.Schema({
     username: {type: String,required: true},
+    // username: {type: mongoose.Schema.Types.ObjectId,ref: 'SignUp',required: true},
     likes: [
         {
             like_id: {

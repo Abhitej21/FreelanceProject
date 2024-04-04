@@ -6,15 +6,40 @@
 .back {
      background-size: cover;
      width: 100vw;
-     height: 100vh;
+     max-height: 99vh;
      margin: 0;
+     margin-top: 0;
      display: flex;
      padding: 100px;
+     padding-left: 150px;
+     /* padding-right: 150px; */
      justify-content: space-between;
      align-items: center;
      background-color: rgb(8,7,25,255);
-}
 
+}
+.logo-name-home{
+  background-color: rgb(8,7,25,255);
+  font-size: 45px;
+  font-weight: bold;
+  transform: translate(0,10px);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+.logo-name-home span{
+  color: blue;
+}
+.logo-name-home .ex{
+  color: green;
+}
+.logo-name-home p{
+  color: white;
+  font-size: 14px;
+}
 .find p{
     color: white;
     font-size: 100px;

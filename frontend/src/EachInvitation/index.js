@@ -70,8 +70,8 @@ const EachInvitation = (props) => {
              <h5><strong>{invite.jobTitle}</strong></h5>
              <p style={{marginTop: "12px"}}><b>{`Invitation from ${invite.inviter}`}</b></p>
              {value===0 && <div className='d-flex invite-btns'>
-                <button className='btn btn-success invite-button' onClick={acceptInvite}>ACCEPT</button>
-                <button className='btn btn-danger invite-button' onClick={rejectInvite}>REJECT</button>
+                <button className='invite-button-accept' onClick={acceptInvite}>ACCEPT</button>
+                <button className='invite-button-reject' onClick={rejectInvite}>REJECT</button>
              </div>}
              {value===1 && <div>
                     <p className='status-msg'><i className="fa-solid fa-circle-check icon-g"></i>You have accepted the invitation</p>

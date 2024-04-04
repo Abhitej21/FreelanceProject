@@ -1,10 +1,27 @@
 
 
-.invite-button{
-    border-radius: 10px;
-    margin: 10px;
-    width: 130px;
+.invite-button-reject{
+  border-radius: 10px;
+  margin: 10px;
+  background-color: red;
+  color: white;
+  border: 0;
+  padding: 10px;
+  border-radius: 12px;
+  width: 130px;
 }
+
+.invite-button-accept{
+  border-radius: 10px;
+  margin: 10px;
+  color: white;
+  background-color: green;
+  border: 0;
+  padding: 10px;
+  border-radius: 12px;
+  width: 130px;
+}
+
 .invite-btns{
     margin-top: 20px;
 }

@@ -8,7 +8,13 @@ const Home = () => {
         return <Redirect to="/jobs" />
     }
    return (
+    <>
+        <div className='logo-name-home'>
+            <span>Job<span className='ex'>Street </span></span>
+            <p>Where Talent Meets Opportunity</p>
+        </div>
         <div className='back'>
+            
             <div>
             <div className='find'>
                 <p>Find Your</p>
@@ -27,6 +33,7 @@ const Home = () => {
             </div>
             
         </div>
+      </>
     )
 }
 

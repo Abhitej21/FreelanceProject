@@ -14,13 +14,20 @@
 
 
 .form-bottom{
-    height: calc(120vh - 105px);
+    height: calc(125vh - 105px);
     max-width: 75vw;
     margin-top: 20px;
+   
     
 }
+
+.req::after {
+    content: ' *';
+    color: red;
+  }
 .no-user-found{
-    background-color: rgb(255, 255, 255,0.8);
+    background-color: #121212;
+    color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
