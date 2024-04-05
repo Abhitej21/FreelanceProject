@@ -75,7 +75,7 @@ const LatestJobs = () => {
         </div>
         </div>
             <div className='home-page-content'>
-                {jobs.map((job,index)  => {
+                {jobs && jobs.map((job,index)  => {
                   return <JobElement job={job.job} recruiter={job.recruiter} key={index}/>
                 }
                  
