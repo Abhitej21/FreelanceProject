@@ -35,7 +35,6 @@
     "nodemon": "^3.1.0",
     "nyc": "^15.1.0",
     "openai": "^4.29.2",
-    "react-push-notification": "^1.5.4",
     "sinon": "^17.0.1",
     "socket.io": "^4.7.5",
     "ts-loader": "^9.5.1",
