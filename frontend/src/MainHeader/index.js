@@ -4,8 +4,7 @@ import io from 'socket.io-client'
 import './index.css'
 import Cookies from 'js-cookie'
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import NotificationBadge from 'react-notification-badge';
-import { Effect } from 'react-notification-badge';
+// import NotificationBadge from 'react-notification-badge';
 import {URL} from '../data'
 
 const prevNotifications = [
@@ -161,7 +160,7 @@ const MainHeader = () => {
 
          <div className="dropdown">
           <div onMouseEnter={() => onBellClick()}>
-          <div className='badge'><NotificationBadge count={count} effect={Effect.SCALE}/></div>
+          {/* <div className='badge'><NotificationBadge count={count} effect={Effect.SCALE}/></div> */}
       <div>  <i className="fa-regular fa-bell bell"></i></div></div>
          
          
