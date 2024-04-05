@@ -3,7 +3,7 @@ import './index.css'
 import Swal from 'sweetalert2'
 import AWS from 'aws-sdk'
 import Cookies from 'js-cookie'
-
+import {URL} from '../data'
 
 const APPLICATION_STATUS = {
     1: 'Pending',
@@ -36,7 +36,7 @@ const EachApplied = (props) => {
       }).then(async (result) => {
             if(result.isConfirmed){
                 const jwtToken = Cookies.get('jwt_token')
-                const delUrl = `http://localhost:8000/apply/${details.applicationId}`
+                const delUrl = `${URL}/apply/${details.applicationId}`
                 const options = {
                     method: 'DELETE',
                     headers: {

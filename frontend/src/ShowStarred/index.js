@@ -5,6 +5,7 @@ import {data} from '../data'
 import SavedPost from '../SavedPost';
 import BackBtn from '../BackBtn';
 import Loader from 'react-loader-spinner';
+import {URL} from '../data'
 
 
 const ShowStarred = () => {
@@ -13,7 +14,7 @@ const ShowStarred = () => {
     useEffect(() => {
         async function fetchLikedPosts(){ 
         const jwtToken = Cookies.get('jwt_token')
-        const url = `http://localhost:8000/jobs/saved`
+        const url = `${URL}/jobs/saved`
         const options = {
           method: 'GET',
           headers: {

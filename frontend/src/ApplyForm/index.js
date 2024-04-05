@@ -7,6 +7,7 @@ import {  useParams,useHistory } from 'react-router-dom/cjs/react-router-dom.min
 import Loader from 'react-loader-spinner';
 import axios from 'axios'
 import MainHeader from '../MainHeader';
+import {URL} from '../data'
 
 const ApplyForm = () => {
     const {id} = useParams()
@@ -28,7 +29,7 @@ const ApplyForm = () => {
     useEffect(() => {
       async function fetchDefault(){
           const jwtToken = Cookies.get('jwt_token')
-          const newUrl = `http://localhost:8000/apply/${id}`
+          const newUrl = `${URL}/apply/${id}`
           const options = {
               method: 'GET',
               headers: {
@@ -109,7 +110,7 @@ const ApplyForm = () => {
     const jwtToken = Cookies.get('jwt_token')
      const {startDate,resume } = defaultDetails
      
-     const applyUrl = `http://localhost:8000/apply/${id}`
+     const applyUrl = `${URL}/apply/${id}`
      const newDetails = {
       startDate,
       resume,

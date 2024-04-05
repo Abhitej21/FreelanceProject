@@ -1,4 +1,4 @@
-
+export const URL = 'http://localhost:8000'
 
 // const url = 'https://apis.ccbp.in/profile'
 export const data = [

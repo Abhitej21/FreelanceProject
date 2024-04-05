@@ -5,6 +5,7 @@ import EachInvitation from '../EachInvitation'
 import Loader from 'react-loader-spinner'
 import MainHeader from '../MainHeader'
 import BackBtn from '../BackBtn'
+import {URL} from '../data'
 
 const Invitations = () => {
     const [invites,setInvites] = useState([])
@@ -12,7 +13,7 @@ const Invitations = () => {
     useEffect(() => {
         async function fetchUsername(){
             const jwtToken = Cookies.get('jwt_token')
-            const newUrl = `http://localhost:8000/jobs/invitations`
+            const newUrl = `${URL}/jobs/invitations`
             const options = {
                 method: 'GET',
                 headers: {

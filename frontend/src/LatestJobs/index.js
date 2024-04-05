@@ -4,6 +4,7 @@ import './index.css'
 import JobElement from '../JobElement'
 import MainHeader from '../MainHeader'
 import Loader from 'react-loader-spinner'
+import {URL} from '../data'
 
 const LatestJobs = () => {
     const [jobs,setJobs] = useState([])
@@ -23,7 +24,7 @@ const LatestJobs = () => {
     useEffect(() => {
         async function fetchUsername(){
             const jwtToken = Cookies.get('jwt_token')
-            const newUrl = `http://localhost:8000/jobs/latest`
+            const newUrl = `${URL}/jobs/latest`
             const options = {
                 method: 'GET',
                 headers: {

@@ -7,6 +7,7 @@ import MainHeader from "../MainHeader";
 import { Redirect, useHistory, useParams } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import Webcam from "react-webcam";
+import {URL} from '../data'
 
 const skillsOptions = [
   "React",
@@ -70,7 +71,7 @@ const ProfilePage = () => {
   useEffect(() => {
     async function fetchUsername() {
       const jwtToken = Cookies.get("jwt_token");
-      const newUrl = `http://localhost:8000/profile/${id}`;
+      const newUrl = `${URL}/profile/${id}`;
       const options = {
         method: "GET",
         headers: {
@@ -165,7 +166,7 @@ const ProfilePage = () => {
   }, [webcamRef]);
 
   const submitPhoto = (event) => {
-    const postUrl = `http://localhost:8000/profile/${userDetails.username}`;
+    const postUrl = `${URL}/profile/${userDetails.username}`;
     const newDetails = { ...userDetails, profileUrl: url };
     axios
       .post(postUrl, newDetails)
@@ -179,7 +180,7 @@ const ProfilePage = () => {
 
   const submitDetails = async (event) => {
     event.preventDefault();
-    const postUrl = `http://localhost:8000/profile/${userDetails.username}`;
+    const postUrl = `${URL}/profile/${userDetails.username}`;
     axios
       .post(postUrl, userDetails)
       .then((response) => {

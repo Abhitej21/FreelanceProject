@@ -6,6 +6,7 @@ import Cookies from 'js-cookie'
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import NotificationBadge from 'react-notification-badge';
 import { Effect } from 'react-notification-badge';
+import {URL} from '../data'
 
 const prevNotifications = [
   {
@@ -25,7 +26,7 @@ const prevNotifications = [
 },
 
 ]
-const socket = io.connect('http://localhost:8000')
+const socket = io.connect(`${URL}`)
 const MainHeader = () => {
   const [bellOpen,setBellOpen] = useState(false)
   const [count,setCount] = useState(0)

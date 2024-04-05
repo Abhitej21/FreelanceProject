@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import './index.css'
 import Swal from 'sweetalert2'
+import {URL} from '../data'
 
 const ForgotPassword = () => {
     const [email,setEmail] = useState()
@@ -9,7 +10,7 @@ const ForgotPassword = () => {
     const submitDetails = (event) => {
       event.preventDefault()
       console.log(email)
-      axios.post('http://localhost:8000/forgot-password',{email})
+      axios.post(`${URL}/forgot-password`,{email})
       .then(res => {
         if(res.data.token){
             Swal.fire({

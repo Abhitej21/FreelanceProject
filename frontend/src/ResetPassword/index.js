@@ -11,7 +11,7 @@ const ResetPassword = () => {
     const submitDetails = (event) => {
       event.preventDefault()
       console.log(password)
-      axios.post(`http://localhost:8000/reset-password/${id}/${token}`,{password})
+      axios.post(`${URL}/reset-password/${id}/${token}`,{password})
       .then(res => {
         if(res.data.message === 'Success'){
           Swal.fire({

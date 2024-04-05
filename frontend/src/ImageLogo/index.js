@@ -5,6 +5,7 @@ import ExitIcon from '@rsuite/icons/Exit';
 import './index.css'
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import Loader from 'react-loader-spinner';
+import {URL} from '../data'
 
 const ImageLogo = () => {
  const [userDetails,setUserDetails] = useState({})
@@ -13,7 +14,7 @@ const ImageLogo = () => {
   useEffect(() => {
     async function fetchUsername(){
         const jwtToken = Cookies.get('jwt_token')
-        const newUrl = 'http://localhost:8000/image'
+        const newUrl = `${URL}/image`
         const options = {
             method: 'GET',
             headers: {

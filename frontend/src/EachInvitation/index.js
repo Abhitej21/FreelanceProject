@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'
 import './index.css'
 import Swal from 'sweetalert2'
 import Loader from 'react-loader-spinner'
+import {URL} from '../data'
 
 const EachInvitation = (props) => {
     const [value,setValue] = useState(0)
@@ -10,7 +11,7 @@ const EachInvitation = (props) => {
     const {invite} = props 
     useEffect(() => {
         const jwtToken = Cookies.get('jwt_token')
-        const newUrl = `http://localhost:8000/jobs/invitations/${invite.inviteId}`
+        const newUrl = `${URL}/jobs/invitations/${invite.inviteId}`
         const options = {
             method: 'GET',
             headers: {
@@ -27,7 +28,7 @@ const EachInvitation = (props) => {
     },[])
     const sendResponse = (val) => {
         const jwtToken = Cookies.get('jwt_token')
-            const newUrl = `http://localhost:8000/jobs/invitations/${invite.inviteId}`
+            const newUrl = `${URL}/jobs/invitations/${invite.inviteId}`
             const options = {
                 method: 'POST',
                 headers: {

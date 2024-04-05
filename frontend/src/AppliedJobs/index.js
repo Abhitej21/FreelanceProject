@@ -5,6 +5,11 @@ import './index.css'
 import EachApplied from '../EachApplied'
 import Loader from 'react-loader-spinner'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import {URL} from '../data' 
+
+
+console.log(URL)
+
 
 const AppliedJobs = () => {
     const [jobs,setJobs] = useState([])
@@ -14,7 +19,7 @@ const AppliedJobs = () => {
     useEffect(() => {
         async function fetchUsername(){
             const jwtToken = Cookies.get('jwt_token')
-            const newUrl = `http://localhost:8000/jobs/applied`
+            const newUrl = `${URL}/jobs/applied`
             const options = {
                 method: 'GET',
                 headers: {

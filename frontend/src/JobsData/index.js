@@ -15,7 +15,7 @@ import io from 'socket.io-client'
 import { Redirect,withRouter } from 'react-router-dom/cjs/react-router-dom.min'
 import FilterOptions from '../FilterOptions'
 import Swal from 'sweetalert2'
-
+import {URL} from '../data'
 
 
 
@@ -110,7 +110,7 @@ const stagesForConditionChecking = {
 
 class JobsDetails extends Component {
 
-  socket = io.connect('http://localhost:8000')
+  socket = io.connect(`${URL}`)
   state = {
     temp: 0,
     name: '',
@@ -151,7 +151,7 @@ class JobsDetails extends Component {
   }
   showProfile = async () => {
     const jwtToken = Cookies.get('jwt_token')
-    const newUrl = 'http://localhost:8000/profile'
+    const newUrl = `${URL}/profile`
     const options = {
       method: 'GET',
       headers: {
@@ -207,7 +207,7 @@ class JobsDetails extends Component {
     const DetailsOfJobs = await FetchingJobsDetails.json()
 
     const jwtToken = Cookies.get('jwt_token')
-      const url = `http://localhost:8000/jobs/saved`
+      const url = `${URL}/jobs/saved`
       const options = {
         method: 'GET',
         headers: {
@@ -270,7 +270,7 @@ class JobsDetails extends Component {
   FetchingData = async () => {
     this.setState({CheckingProfileData: stagesForConditionChecking.load})
     const jwtToken = Cookies.get('jwt_token')
-    const newUrl = 'http://localhost:8000/jobs'
+    const newUrl = `${URL}/jobs`
     const options = {
       method: 'GET',
       headers: {
@@ -384,7 +384,7 @@ class JobsDetails extends Component {
   onHeartClick = async (id,isRed) => {
     if(isRed){
       const jwtToken = Cookies.get('jwt_token')
-      const url = `http://localhost:8000/jobs/${id}`
+      const url = `${URL}/jobs/${id}`
       const options = {
         method: 'DELETE',
         headers: {
@@ -399,7 +399,7 @@ class JobsDetails extends Component {
     }
     else{
       const jwtToken = Cookies.get('jwt_token')
-        const url = `http://localhost:8000/jobs/${id}`
+        const url = `${URL}/jobs/${id}`
         const options = {
           method: 'GET',
           headers: {
