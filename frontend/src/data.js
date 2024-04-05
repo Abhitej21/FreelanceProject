@@ -1,4 +1,7 @@
-export const URL = 'http://localhost:8000'
+// export const URL = 'http://localhost:8000'
+export const URL = 'https://freelanceproject-65oj.onrender.com'
+
+
 
 // const url = 'https://apis.ccbp.in/profile'
 export const data = [
