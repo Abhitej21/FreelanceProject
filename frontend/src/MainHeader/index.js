@@ -15,7 +15,7 @@ const prevNotifications = [
 },
 {
   imgUrl: 'https://assets.bizclikmedia.net/576/15854893995819287b3a084bd73a4b20:0d64277fe26583ad50056b3cac55bf79/download-20-2-2.png',
-  name: 'George Hembulton<',
+  name: 'George Hembulton',
   text: 'George posted a new Job',
 },
 {
@@ -29,7 +29,7 @@ const socket = io.connect(`${URL}`)
 const MainHeader = () => {
   const [bellOpen,setBellOpen] = useState(false)
   const [count,setCount] = useState(0)
- const [notifications,setNotifications] = useState([])
+ const [notifications,setNotifications] = useState(prevNotifications)
 //  useEffect(() => {
 //   async function fetchNotifications(){
 //       const jwtToken = Cookies.get('jwt_token')

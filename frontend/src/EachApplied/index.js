@@ -4,6 +4,7 @@ import Swal from 'sweetalert2'
 import AWS from 'aws-sdk'
 import Cookies from 'js-cookie'
 import {URL as CUR_URL} from '../data'
+import { Spinner } from 'react-bootstrap'
 
 const APPLICATION_STATUS = {
     1: 'Pending',
@@ -73,6 +74,7 @@ const EachApplied = (props) => {
             const url = URL.createObjectURL(pdfData)
             window.open(url,'_blank')
             setPdfUrl(url)
+            setIsLoading(false)
         }
         catch(e){
             console.error(e)
@@ -111,7 +113,9 @@ const EachApplied = (props) => {
             </div>
             <div className='buttons-latest'>
             <button className="btn-31 f-button" onClick={viewPdf}>
+                
             <span className="text-container">
+            {isLoading && <Spinner animation="border" color='black' size="sm" />}
                 <span className="text">View</span>
             </span>
         </button>

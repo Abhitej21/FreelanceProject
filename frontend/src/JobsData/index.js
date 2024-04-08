@@ -419,7 +419,7 @@ class JobsDetails extends Component {
 
     return (
       <div className="AllDataOfItems">
-        <h4 style={{fontWeight: "bold"}}>{`Number of Job Posts: ${totalJobs.length}`}</h4>
+        <h4 style={{fontWeight: "bold",marginLeft: "150px"}}>{`Number of Job Posts: ${totalJobs.length}`}</h4>
         {totalJobs.map(each => (
           <JobCard 
           each={each} 
