@@ -5,6 +5,7 @@ import JobElement from '../JobElement'
 import MainHeader from '../MainHeader'
 import Loader from 'react-loader-spinner'
 import {URL} from '../data'
+import { Link } from 'react-router-dom/cjs/react-router-dom.min'
 
 const LatestJobs = () => {
     const [jobs,setJobs] = useState([])
@@ -61,9 +62,9 @@ const LatestJobs = () => {
       <div>
         <div className='top-btns'>
         <button type="button" className='back-button'>
-          <a href="/jobs" style={{textDecoration: "none",color: "white"}}>
+          <Link to="/jobs" style={{textDecoration: "none",color: "white"}}>
             <i className="fa-solid fa-arrow-left" style={{marginRight: "5px"}}></i>
-                Go Back</a>
+                Go Back</Link>
             </button>
        
         <div className ="dropdown-latest">

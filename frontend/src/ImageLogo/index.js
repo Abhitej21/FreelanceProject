@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import Swal from 'sweetalert2'
 import ExitIcon from '@rsuite/icons/Exit';
 import './index.css'
-import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link, Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import Loader from 'react-loader-spinner';
 import {URL} from '../data'
 
@@ -82,18 +82,18 @@ const ImageLogo = () => {
         <p className='name'>{first+" "+last}</p>
         <p className='role'>{bio}</p>
       </div>
-      <a href={`/profile/${username}`}>
+      <Link to={`/profile/${username}`}>
         <div className='flex'>
         <i className="fa-solid fa-user"></i>
         <p className='option'>Profile</p>
         </div>
-      </a>
-      <a href="" onClick={logOut}>
+      </Link>
+      <Link to="" onClick={logOut}>
       <div className='flex'>
         <ExitIcon/>
         <p className='option'>Log out</p>
         </div>
-      </a>
+      </Link>
   </div>
 </div>
   )

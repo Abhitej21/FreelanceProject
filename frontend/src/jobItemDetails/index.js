@@ -2,7 +2,7 @@ import {Component} from 'react'
 import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
 import * as React from 'react'
-import { withRouter } from 'react-router-dom/cjs/react-router-dom.min.js'
+import { Link, withRouter } from 'react-router-dom/cjs/react-router-dom.min.js'
 import {IoLocationOutline} from 'react-icons/io5'
 import {BsBriefcaseFill} from 'react-icons/bs'
 // import {FaRegStar} from 'react-icons/fa'
@@ -13,6 +13,7 @@ import {FaStar, FaShareSquare} from 'react-icons/fa'
 import './index.css'
 import SimilarJobDetails from '../SimilarJobs'
 import { mainToken } from '../data.js'
+
 
 const statusForJobs = {
   initial: 'INITIAL',
@@ -125,9 +126,9 @@ class JobItemDetails extends Component {
             </div>
             </div>
             <div>
-              <a href="/jobs">
+              <Link to="/jobs">
             <button className='close-button'>CLOSE</button>
-            </a>
+            </Link>
             </div>
           </div>
           <div className="LocationSingleJob">
@@ -151,9 +152,9 @@ class JobItemDetails extends Component {
           <div className="DiscriptionFlex">
             <h1>Description</h1>
             <div className="Visit">
-              <a className="anchor" href={jobCard.companyWebSite}>
+              <Link className="anchor" to={jobCard.companyWebSite}>
                 Visit
-              </a>
+              </Link>
               &nbsp;
               <FaShareSquare className="Share" />
               &nbsp;

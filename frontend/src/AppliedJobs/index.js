@@ -6,6 +6,7 @@ import EachApplied from '../EachApplied'
 import Loader from 'react-loader-spinner'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import {URL} from '../data' 
+import { Link } from 'react-router-dom/cjs/react-router-dom.min'
 
 
 console.log(URL)
@@ -51,9 +52,9 @@ const AppliedJobs = () => {
           <h1 className='latest'>Jobs Applied By You</h1>
           <div className='top-btns-one'>
           <button type="button" className='back-button'>
-            <a href="/jobs" style={{textDecoration: "none",color: "white"}}>
+            <Link to="/jobs" style={{textDecoration: "none",color: "white"}}>
               <i class="fa-solid fa-arrow-left" style={{marginRight: "5px"}}></i>
-                  Go Back</a>
+                  Go Back</Link>
               </button>
           </div>
               <div className='home-page-content'>

@@ -474,8 +474,8 @@ class JobsDetails extends Component {
           <div className='main-search'>
             <div className="search-items">
             <button className='free-button'>
-              <a href="/jobs/latest" className='free-jobs'>
-              <b>Freelance Jobs</b></a>
+              <Link to="/jobs/latest" className='free-jobs'>
+              <b>Freelance Jobs</b></Link>
             </button>
               <div className="searchBar">
                   

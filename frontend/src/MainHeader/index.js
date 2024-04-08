@@ -135,24 +135,24 @@ const MainHeader = () => {
         <div className="pages">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
-            <a className="nav-link link-name" href="/">
+            <Link to="/" className="nav-link link-name">
               Home
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link link-name" href="/jobs">
+            <Link to="/jobs" className="nav-link link-name">
               Jobs
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link link-name" href="/jobs/applied">
+            <Link className="nav-link link-name" to="/jobs/applied">
               My Applications
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link link-name" href="/jobs/invitations">
+            <Link className="nav-link link-name" to="/jobs/invitations">
               Invitations
-            </a>
+            </Link>
           </li>
         </ul>
         </div>
