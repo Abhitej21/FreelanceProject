@@ -77,6 +77,7 @@ const EachApplied = (props) => {
             setIsLoading(false)
         }
         catch(e){
+            setIsLoading(false)
             console.error(e)
         }
    }
@@ -114,8 +115,8 @@ const EachApplied = (props) => {
             <div className='buttons-latest'>
             <button className="btn-31 f-button" onClick={viewPdf}>
                 
+            {isLoading && <Spinner animation="border" color='red' size="md" />}
             <span className="text-container">
-            {isLoading && <Spinner animation="border" color='black' size="sm" />}
                 <span className="text">View</span>
             </span>
         </button>
