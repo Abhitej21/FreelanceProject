@@ -198,8 +198,8 @@ app.post('/forgot-password',async (req,res) => {
     }
 })
 const name = prevData.username.charAt(0).toUpperCase()+prevData.username.substring(1)
-const link = `http://localhost:3000/reset-password/${prevData._id}/${token}`
-
+// const link = `http://localhost:3000/reset-password/${prevData._id}/${token}`
+const link = `https://freelanceproject-1.onrender.com/reset-password/${prevData._id}/${token}`
 
 const html = `
 <!DOCTYPE html>
