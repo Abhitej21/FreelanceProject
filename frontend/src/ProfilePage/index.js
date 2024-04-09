@@ -7,7 +7,7 @@ import MainHeader from "../MainHeader";
 import { Redirect, useHistory, useParams } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import Webcam from "react-webcam";
-import {URL} from '../data'
+import {URL as CUR_URL} from '../data'
 
 const skillsOptions = [
   "React",
@@ -34,22 +34,6 @@ const ProfilePage = () => {
   const [files, setFiles] = useState();
   const [previews, setPreviews] = useState();
   const [userExists, setUserExists] = useState(true);
-  useEffect(() => {
-    if (!files) return;
-    let temp = [];
-    for (let i = 0; i < files.length; i++) {
-      temp.push(URL.createObjectURL(files[i]));
-    }
-    const objUrl = temp;
-    setPreviews(objUrl);
-    setUserDetails({ ...userDetails, profileUrl: objUrl[0] });
-    for (let i = 0; i < objUrl.length; i++) {
-      return () => {
-        URL.revokeObjectURL(objUrl[i]);
-      };
-    }
-  }, [files]);
-  const [isLoading, setIsLoading] = useState(true);
   const [userDetails, setUserDetails] = useState({
     userId: "",
     username: "",
@@ -69,9 +53,26 @@ const ProfilePage = () => {
     prevData: {},
   });
   useEffect(() => {
+    if (!files) return;
+    let temp = [];
+    for (let i = 0; i < files.length; i++) {
+      temp.push(URL.createObjectURL(files[i]));
+    }
+    const objUrl = temp;
+    setPreviews(objUrl);
+    setUserDetails({ ...userDetails, profileUrl: objUrl[0] });
+    for (let i = 0; i < objUrl.length; i++) {
+      return () => {
+        URL.revokeObjectURL(objUrl[i]);
+      };
+    }
+  }, [files]);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
     async function fetchUsername() {
       const jwtToken = Cookies.get("jwt_token");
-      const newUrl = `${URL}/profile/${id}`;
+      const newUrl = `${CUR_URL}/profile/${id}`;
       const options = {
         method: "GET",
         headers: {
@@ -146,7 +147,6 @@ const ProfilePage = () => {
         ? [...userDetails.userSkills]
         : [...userDetails.userSkills, newSkill],
     });
-    // console.log(userDetails.skills)
   };
 
   const handleGithubUrlChange = (event) =>
@@ -166,7 +166,7 @@ const ProfilePage = () => {
   }, [webcamRef]);
 
   const submitPhoto = (event) => {
-    const postUrl = `${URL}/profile/${userDetails.username}`;
+    const postUrl = `${CUR_URL}/profile/${userDetails.username}`;
     const newDetails = { ...userDetails, profileUrl: url };
     axios
       .post(postUrl, newDetails)
@@ -180,7 +180,7 @@ const ProfilePage = () => {
 
   const submitDetails = async (event) => {
     event.preventDefault();
-    const postUrl = `${URL}/profile/${userDetails.username}`;
+    const postUrl = `${CUR_URL}/profile/${userDetails.username}`;
     axios
       .post(postUrl, userDetails)
       .then((response) => {

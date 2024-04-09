@@ -494,7 +494,7 @@ class JobsDetails extends Component {
             </div>
            <div className='mode'>
             <FilterOptions changeByDate={changeByDate}/>
-           <ToggleMode/>
+           {/* <ToggleMode/> */}
            </div>
               
             
