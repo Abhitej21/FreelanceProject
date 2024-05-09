@@ -19,7 +19,7 @@ const MyJob = require('./JobSchema')
 const authenticateToken = require('./Routes/Authenticate')
 const Notify = require('./NotificationSchema')
 
-const {S3Client,DeleteObjectCommand,GetObjectCommand, ListObjectsCommand, PutObjectCommand, ListBucketInventoryConfigurationsOutputFilterSensitiveLog}=require('@aws-sdk/client-s3');
+const {S3Client}=require('@aws-sdk/client-s3');
 
 const applyRoute = require('./Routes/ApplyRoute')
 const profileRoute = require('./Routes/ProfileRoute')
@@ -56,7 +56,7 @@ const changeStream = MyJob.watch()
 mongoose.connect(DBURL,{useNewUrlParser: true,useUnifiedTopology: true})
 .then((res) => {
   server.listen(8000);
-  console.log("Connected to Server 8080");
+  console.log("Connected to Server 8000");
 }).catch((err) => console.log(err))
 
 
@@ -154,6 +154,7 @@ const s3 = new S3Client({
 
 app.post('/login',async (req,res) => {
     const {username,password} = req.body 
+  console.log(username,password)
     const prevData = await SignUp.findOne({username})
     if(prevData === null){
         res.send({userExists: false})
@@ -248,8 +249,6 @@ transport.sendMail(mail,(error,info) => {
         res.send({message: 'Success'})
     }
 })
-
-
   res.send({token})
 })
 

@@ -104,6 +104,7 @@ const ApplyForm = () => {
     event.preventDefault()
     setSubmitLoading(true)
     const formData = new FormData();
+    console.log('Resume',defaultDetails.resume)   
     formData.append('startDate',defaultDetails.startDate);
     formData.append('resume',defaultDetails.resume);
     // console.log(formData)
@@ -111,10 +112,6 @@ const ApplyForm = () => {
      const {startDate,resume } = defaultDetails
      
      const applyUrl = `${URL}/apply/${id}`
-     const newDetails = {
-      startDate,
-      resume,
-     }
      const axiosConfig = {
       headers: {
         'Authorization': `Bearer ${jwtToken}`, 
@@ -122,7 +119,6 @@ const ApplyForm = () => {
       },
     };
      axios.post(applyUrl,formData,axiosConfig).then(response => {
-      console.log("Oreyyy",response)
       setSubmitLoading(false)
       Swal.fire({
         position: "center",

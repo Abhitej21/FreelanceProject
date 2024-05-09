@@ -30,6 +30,7 @@ const AppliedJobs = () => {
             fetch(newUrl, options)
             .then(async(response) =>{
                 const data = await response.json();
+                console.log(data.data)
                 setIsLoading(false)
                 setMyJobs(data.formData)
                 setJobs(data.data)
@@ -37,7 +38,7 @@ const AppliedJobs = () => {
             
         }
         fetchUsername()
-    },[jobs])
+    },[])
 
     if(isLoading){
         return <div className="loader-container" data-testid="loader">

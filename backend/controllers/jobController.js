@@ -68,6 +68,7 @@ exports.getInvitations = async (req,res) => {
         salaryType: eachInvite.salaryType,
         jobDescription: eachInvite.jobDescription,
         inviter: recruiterData && recruiterData.firstName+" "+recruiterData.lastName,
+        status: eachInvite.status,  
       }
       return newObject
     })

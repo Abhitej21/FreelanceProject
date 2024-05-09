@@ -384,7 +384,7 @@ class JobsDetails extends Component {
   onHeartClick = async (id,isRed) => {
     if(isRed){
       const jwtToken = Cookies.get('jwt_token')
-      const url = `${URL}/jobs/${id}`
+      const url = `${URL}/jobs/${id}` 
       const options = {
         method: 'DELETE',
         headers: {
@@ -398,7 +398,7 @@ class JobsDetails extends Component {
         this.setState({listOfSaved: likedList})
     }
     else{
-      const jwtToken = Cookies.get('jwt_token')
+      const jwtToken = Cookies.get('jwt_token') 
         const url = `${URL}/jobs/${id}`
         const options = {
           method: 'GET',
@@ -419,11 +419,11 @@ class JobsDetails extends Component {
 
     return (
       <div className="AllDataOfItems">
-        <h4 style={{fontWeight: "bold",marginLeft: "150px"}}>{`Number of Job Posts: ${totalJobs.length}`}</h4>
+        {/* <h4 style={{fontWeight: "bold",marginLeft: "150px"}}>{`Number of Job Posts: ${totalJobs.length}`}</h4> */}
         {totalJobs.map(each => (
           <JobCard 
           each={each} 
-          onHeartClick={this.onHeartClick} 
+          onHeartClick={this.onHeartClick}  
            isStarred={this.state.listOfSaved.includes(each.id)}
            key={each.id} />
         ))}
@@ -613,7 +613,7 @@ class JobsDetails extends Component {
               </div>
 
               <hr/>
-              <div>
+              {/* <div>
                 <h1 className="SalaryRange">Job Scope</h1>
                 <ul className="Ul">
                   {jobScopeList.map(each => (
@@ -630,7 +630,7 @@ class JobsDetails extends Component {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
             </div>
           </div>
           

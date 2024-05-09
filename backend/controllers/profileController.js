@@ -59,7 +59,7 @@ exports.postProfileById = async(req,res) => {
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        res.json({ message: 'User email updated successfully', user });
+        res.json({ message: 'User profile updated successfully', user });
       }
   
   } catch (error) {

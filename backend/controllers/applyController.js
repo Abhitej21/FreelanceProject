@@ -39,13 +39,23 @@ exports.getApplyById = async (req,res) => {
       }
     }
     else{
-      const {jobTitle,companyName,location,companyLogo} = jobPostContent
-      res.send({prevData,jobTitle,companyName,location,companyLogo})
+
+      // NEWLY ADDED PART. TESTING IS NOT DONE FOR THIS PART 
+      const appliedJobs = await Form.findOne({appliedBy: prevData._id,jobId: jobPostContent._id})
+      if(appliedJobs!== null){
+        res.send({applied: true})
+      }
+      // UPTO HERE NEWLY ADDED  
+      else{
+        const {jobTitle,companyName,location,companyLogo} = jobPostContent
+        res.send({prevData,jobTitle,companyName,location,companyLogo})
+      }
     }
 }
 
 
 exports.postApplicationById = async (req,res) => {
+    console.log(req)
     if(!req.file){
       console.log("Resume is required")
       res.status(400).send("Resume is required")
@@ -76,8 +86,8 @@ if(jobPostContent === null){
         service: 'gmail',
         secure: false,
         auth: {
-        user: process.env.MY_MAIL,
-        pass: process.env.MY_PASS,
+          user: process.env.MY_MAIL,
+          pass: process.env.MY_PASS,
         }
     })
     const name = prevData.username.charAt(0).toUpperCase()+prevData.username.substring(1)

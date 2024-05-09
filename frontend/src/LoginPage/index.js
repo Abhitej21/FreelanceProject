@@ -81,7 +81,7 @@ class LoginPage extends Component {
       return;
     }
     const url = `${URL}/signup`;
-    console.log(newUser)
+    // console.log(newUser)
     axios
       .post(url, newUser)
       .then((res) => {
